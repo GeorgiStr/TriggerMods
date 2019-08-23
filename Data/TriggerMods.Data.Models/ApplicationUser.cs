@@ -7,6 +7,7 @@ namespace TriggerMods.Data.Models
     using TriggerMods.Data.Common.Models;
 
     using Microsoft.AspNetCore.Identity;
+    using System.ComponentModel.DataAnnotations.Schema;
 
     public class ApplicationUser : IdentityUser, IAuditInfo, IDeletableEntity
     {
@@ -16,6 +17,12 @@ namespace TriggerMods.Data.Models
             this.Roles = new HashSet<IdentityUserRole<string>>();
             this.Claims = new HashSet<IdentityUserClaim<string>>();
             this.Logins = new HashSet<IdentityUserLogin<string>>();
+
+            this.Comments = new HashSet<Comment>();
+            this.Mods = new HashSet<Mod>();
+            this.SentPMs = new HashSet<PrivateMessage>();
+            this.ReceviedPMs = new HashSet<PrivateMessage>();
+            this.VotedMods = new HashSet<Vote>();
         }
 
         // Audit info
@@ -33,5 +40,25 @@ namespace TriggerMods.Data.Models
         public virtual ICollection<IdentityUserClaim<string>> Claims { get; set; }
 
         public virtual ICollection<IdentityUserLogin<string>> Logins { get; set; }
+
+        public int CommentsCount { get; set; }
+
+        public int ModCount { get; set; }
+
+        public int RemovedMods { get; set; }
+
+        public int TotalUserVotes { get; set; }
+
+        public ICollection<Comment> Comments { get; set; }
+
+        public ICollection<Mod> Mods { get; set; }
+
+        [InverseProperty("Sender")]
+        public ICollection<PrivateMessage> SentPMs { get; set; }
+
+        [InverseProperty("Receiver")]
+        public ICollection<PrivateMessage> ReceviedPMs { get; set; }
+
+        public ICollection<Vote> VotedMods { get; set; }
     }
 }

@@ -25,6 +25,16 @@
         }
 
         public DbSet<Setting> Settings { get; set; }
+        public DbSet<Mod> Mods { get; set; }
+        public DbSet<Game> Games { get; set; }
+        public DbSet<Picture> Pictures { get; set; }
+        public DbSet<File> Files { get; set; }
+        public DbSet<Comment> Comments { get; set; }
+        public DbSet<Vote> Votes { get; set; }
+        public DbSet<PrivateMessage> PrivateMessages { get; set; }
+        public DbSet<ReportMod> ReportMods { get; set; }
+        
+
 
         public override int SaveChanges() => this.SaveChanges(true);
 
