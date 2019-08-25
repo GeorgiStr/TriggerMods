@@ -38,4 +38,9 @@
     <ProjectReference Include="..\TriggerMods.Web.Infrastructure\TriggerMods.Web.Infrastructure.csproj" />
     <ProjectReference Include="..\TriggerMods.Web.ViewModels\TriggerMods.Web.ViewModels.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Common\" />
+    <Folder Include="wwwroot\images\Games\" />
+  </ItemGroup>
 </Project>

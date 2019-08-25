@@ -1,0 +1,36 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<div align="center" style="padding-bottom:20px;">
+    <a asp-controller="Game" asp-action="Create" class="btn btn-primary btn-md">New Game</a>
+</div>
+
+<table class="table table-hover">
+    <thead>
+        <tr class="row">
+            <th scope="col" class="col-lg-3">Name</th>
+            <th scope="col" class="col-lg-3">Mods</th>
+            <th scope="col" class="col-lg-3">Downloads</th>
+            <th scope="col" class="col-lg-2"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var game in Model)
+        {
+        <tr class="row">
+            <td class="col-lg-3">@game.Name</td>
+            <td class="col-lg-3">@game.ModCount</td>
+            <td class="col-lg-3">@game.TotalDownlaodCount</td>
+            <td class="col-lg-2">
+                <div class="button-holder">
+                    <a href="/Carts/AddProduct?productId=@game.Id" class="btn btn-outline-primary">Edit</a>
+                    <a href="/Carts/AddProduct?productId=@game.Id" class="btn btn-outline-primary">Delete</a>
+                </div>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
