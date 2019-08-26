@@ -30,5 +30,8 @@
         [Display(Name = "Image")]
         [Required(ErrorMessage = Required)]
         public IFormFile MainImage { get; set; }
+
+        [Required(ErrorMessage = Required)]
+        public IFormFile MainFile { get; set; }
     }
 }
