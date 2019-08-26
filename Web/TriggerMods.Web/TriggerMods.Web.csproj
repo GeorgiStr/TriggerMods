@@ -42,5 +42,6 @@
   <ItemGroup>
     <Folder Include="Common\" />
     <Folder Include="wwwroot\images\Games\" />
+    <Folder Include="wwwroot\images\Mods\" />
   </ItemGroup>
 </Project>

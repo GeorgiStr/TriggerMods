@@ -18,7 +18,7 @@ namespace TriggerMods.Data.Models
 
         public int ModCount { get; set; }
 
-        public int TotalDownlaodCount { get; set; }
+        public int TotalDownloadCount { get; set; }
 
         public ICollection<Mod> Mods { get; set; }
     }

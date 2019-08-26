@@ -1,13 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using TriggerMods.Data;
-using TriggerMods.Data.Models;
-
-namespace TriggerMods.Services
+﻿namespace TriggerMods.Services
 {
+    using System.Linq;
+
+    using TriggerMods.Data;
+    using TriggerMods.Data.Models;
+
     public class GameService : IGameService
     {
         private readonly ApplicationDbContext db;
@@ -45,6 +42,11 @@ namespace TriggerMods.Services
         public IQueryable<Game> GetAll()
         {
             return this.db.Games;
+        }
+
+        public Game GetGameById(string Id)
+        {
+            return this.db.Games.FirstOrDefault(x => x.Id == Id);
         }
     }
 }

@@ -30,7 +30,7 @@ namespace TriggerMods.Web.Areas.Administration.Controllers
                 Id = x.Id,
                 Name = x.Name,
                 ModCount = x.ModCount,
-                TotalDownlaodCount = x.TotalDownlaodCount,
+                TotalDownloadCount = x.TotalDownloadCount,
             }).ToList();
 
             return this.View(viewModel);

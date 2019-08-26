@@ -1,10 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using TriggerMods.Data.Common.Models;
+﻿
 
 namespace TriggerMods.Data.Models
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Text;
+    using TriggerMods.Data.Common.Models;
+
     public class Mod : BaseModel<string>
     {
         public Mod()
@@ -13,6 +15,7 @@ namespace TriggerMods.Data.Models
             this.Files = new HashSet<File>();
             this.Comments = new HashSet<Comment>();
             this.Votes = new HashSet<Vote>();
+            this.Visible = false;
         }
 
         public string Name { get; set; }
@@ -21,11 +24,15 @@ namespace TriggerMods.Data.Models
 
         public string Description { get; set; }
 
+        public string MainPicturePath { get; set; }
+
         public int Views { get; set; }
 
-        public int TotalDownlaodCount { get; set; }
+        public int TotalDownloadCount { get; set; }
 
         public int VoteCount { get; set; }
+
+        public bool Visible { get; set; }
 
         public string UserId { get; set; }
         public ApplicationUser User { get; set; }

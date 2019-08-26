@@ -102,6 +102,7 @@
             services.AddTransient<ISettingsService, SettingsService>();
             services.AddTransient<IGameService, GameService>();
             services.AddTransient<IPictureService, PictureService>();
+            services.AddTransient<IModService, ModService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

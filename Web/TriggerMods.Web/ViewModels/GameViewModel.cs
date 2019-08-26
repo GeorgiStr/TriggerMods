@@ -3,13 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace TriggerMods.Web.Areas.Administration.ViewModels.Game
+namespace TriggerMods.Web.ViewModels
 {
-    public class GameListingModel
+    public class GameViewModel
     {
         public string Id { get; set; }
 
         public string Name { get; set; }
+
+        public string GamePicturePath { get; set; }
 
         public int ModCount { get; set; }
 

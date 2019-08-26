@@ -6,14 +6,12 @@ using TriggerMods.Data.Models;
 
 namespace TriggerMods.Services
 {
-    public interface IGameService
+    public interface IModService
     {
-        void CreateGame(Game game);
+        void Create(Mod mod);
 
         void AddImageUrl(string id, string imageUrl);
 
-        IQueryable<Game> GetAll();
-
-        Game GetGameById(string Id);
+        IQueryable<Mod> GetAllByGameId(string Id);
     }
 }
