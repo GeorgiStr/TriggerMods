@@ -43,6 +43,49 @@
             this.db.SaveChanges();
         }
 
+        public void AddFileUrl(string id, string fileUrl)
+        {
+            var mod = this.db.Mods.FirstOrDefault(x => x.Id == id);
+            var file = new File
+            {
+                CreatedOn = DateTime.Now,
+                FilePath = fileUrl,
+                Status = FileStatus.Main,
+                Mod = mod,
+            };
+            if (mod == null)
+            {
+                return;
+            }
+
+            mod.Files.Add(file);
+
+            this.db.SaveChanges();
+        }
+
+        public void AddGalleryUrls(string id, List<string> imageUrls)
+        {
+            var mod = this.db.Mods.FirstOrDefault(x => x.Id == id);
+
+            if (mod == null)
+            {
+                return;
+            }
+
+            foreach (var imageUrl in imageUrls)
+            {
+                var picture = new Picture
+                {
+                    CreatedOn = DateTime.Now,
+                    FilePath = imageUrl,
+                    Mod = mod,
+                };
+                mod.Pictures.Add(picture);
+            }
+
+            this.db.SaveChanges();
+        }
+
         public IQueryable<Mod> GetAllByGameId(string Id)
         {
             return this.db.Mods.Include(x => x.User).Where(x => x.GameId == Id);

@@ -28,9 +28,44 @@ namespace TriggerMods.Services
             return imageRoot;
         }
 
-        public IEnumerable<string> UploadImages(IList<IFormFile> formImages, int count, string template, int id)
+        public async Task<string> UploadFile(IFormFile formFile, string template, string modName, string modId)
         {
-            throw new NotImplementedException();
+            string urlName = modName.Replace(" ", string.Empty).Substring(0, 5) + modId.Substring(0, 8);
+            var fileExt = System.IO.Path.GetExtension(formFile.FileName).Substring(1);
+
+            var filePath = string.Format(template, urlName) + fileExt;
+
+
+            using (var stream = new FileStream(filePath, FileMode.Create))
+            {
+                await formFile.CopyToAsync(stream);
+            }
+
+            var imageRoot = filePath.Replace(GlobalConstants.WWWROOT, string.Empty);
+
+            return imageRoot;
+        }
+
+        public async Task<IEnumerable<string>> UploadImages(IList<IFormFile> formImages, string template, string modName, string modId)
+        {
+            var imageUrls = new List<string>();
+
+            for (int i = 0; i < formImages.Count; i++)
+            {
+                string urlName = modName.Replace(" ", string.Empty).Substring(0, 5) + modId.Substring(0, 8) + $"_{i}";
+                var imagePath = string.Format(template, urlName);
+
+
+                using (var stream = new FileStream(imagePath, FileMode.Create))
+                {
+                    await formImages[i].CopyToAsync(stream);
+                }
+
+                var imageRoot = imagePath.Replace(GlobalConstants.WWWROOT, string.Empty);
+                imageUrls.Add(imageRoot);
+            }
+
+            return imageUrls;
         }
     }
 }

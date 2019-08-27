@@ -9,6 +9,8 @@
     {
         Task<string> UploadImage(IFormFile formImage, string template, string gameName, string gameId);
 
-        IEnumerable<string> UploadImages(IList<IFormFile> formImages, int count, string template, int id);
+        Task<string> UploadFile(IFormFile formImage, string template, string gameName, string gameId);
+
+        Task<IEnumerable<string>> UploadImages(IList<IFormFile> formImages, string template, string modName, string modId);
     }
 }

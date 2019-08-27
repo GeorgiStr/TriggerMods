@@ -9,27 +9,54 @@
 
 @{
     ViewData["Title"] = "Upload Mod";
+    var UrlId = Url.ActionContext.RouteData.Values;
 }
+    
 
-<div class="row">
-    <div class="col-md-4">
+<style>
+    img {
+        height: 300px;
+        width: 300px;
+        object-fit: contain;
+    }
+    
+    /*label#add-image {
+        padding: 10px;
+        background: black;
+        display: table;
+        color: #3090ff;
+    }
+
+
+
+    input[type="file"]#gallery-photo-add {
+        display: none;
+    }*/
+</style>
+
+
+<div align="center">
+    <div class="col-md-6">
         <form asp-controller="Mod" asp-action="Create" enctype="multipart/form-data" method="post" class="form border-primary-4 rounded p-3 w-30 mx-auto mt-3">
             <h4>Create a new category.</h4>
             <hr />
             <div asp-validation-summary="All" class="text-danger"></div>
-            <div class="form-group">
-                
-                <input asp-for="Name" class="form-control" placeholder="Name"/>
+            <div class="form-group" style="width: 70%; float: left;">
+
+                <input asp-for="Name" class="form-control" placeholder="Name" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                
+            <div class="form-group" style="width: 30%; float: right;">
+
                 <input asp-for="Version" class="form-control" placeholder="Version" />
                 <span asp-validation-for="Version" class="text-danger"></span>
             </div>
+            <div class="form-group" style="display: none">
+                <input asp-for="GameId" class="form-control" value=@UrlId["id"] />
+            </div>
             <div class="form-group">
-                
-                <input asp-for="Description" class="form-control" />
+
+                <textarea asp-for="Description" class="form-control" placeholder="Description..." style="resize: vertical;" rows="8"></textarea>
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -37,7 +64,47 @@
                 <input asp-for="MainImage" class="form-control" />
                 <span asp-validation-for="MainImage" class="text-danger"></span>
             </div>
+            <div class="form-group">
+                <label asp-for="MainFile"></label>
+                <input asp-for="MainFile" class="form-control" />
+                <span asp-validation-for="MainFile" class="text-danger"></span>
+            </div>
+            <hr />
+            <div class="form-group">
+                <label asp-for="Gallery" id="add-image"></label>
+                <input asp-for="Gallery" type="file" class="form-control" multiple id="gallery-photo-add" />
+                <span asp-validation-for="Gallery" class="text-danger"></span>
+            </div>
+
+
             <button type="submit" class="btn btn-primary">Create</button>
         </form>
     </div>
 </div>
+<div class="gallery"></div>
+<script>
+    $(function () {
+        // Multiple images preview in browser
+        var imagesPreview = function (input, placeToInsertImagePreview) {
+
+            if (input.files) {
+                var filesAmount = input.files.length;
+
+                for (i = 0; i < filesAmount; i++) {
+                    var reader = new FileReader();
+
+                    reader.onload = function (event) {
+                        $($.parseHTML('<img>')).attr('src', event.target.result).appendTo(placeToInsertImagePreview);
+                    }
+
+                    reader.readAsDataURL(input.files[i]);
+                }
+            }
+
+        };
+
+        $('#gallery-photo-add').on('change', function () {
+            imagesPreview(this, 'div.gallery');
+        });
+    });
+</script>

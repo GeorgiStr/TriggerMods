@@ -1,5 +1,6 @@
 ﻿namespace TriggerMods.Web.InputModels
 {
+    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
     using Microsoft.AspNetCore.Http;
@@ -8,9 +9,9 @@
     {
         public const int NameMaxLength = 30;
         public const int NameMinLength = 5;
-        public const int VersionMaxLength = 30;
-        public const int VersionMinLength = 5;
-        public const int DescriptionMaxLength = 30;
+        public const int VersionMaxLength = 10;
+        public const int VersionMinLength = 1;
+        public const int DescriptionMaxLength = 300;
         public const int DescriptionMinLength = 5;
         public const string Required = "Field \"{0}\" is required.";
         public const string InputLength = "Field \"{0}\" must be between {2} and  {1} characters.";
@@ -32,6 +33,12 @@
         public IFormFile MainImage { get; set; }
 
         [Required(ErrorMessage = Required)]
+        [ValidateFile]
         public IFormFile MainFile { get; set; }
+
+        [Required(ErrorMessage = Required)]
+        public ICollection<IFormFile> Gallery { get; set; }
+
+        public string GameId { get; set; }
     }
 }
