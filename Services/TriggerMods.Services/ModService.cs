@@ -26,6 +26,8 @@
             }
 
             this.db.Mods.Add(mod);
+            mod.Game.ModCount++;
+            mod.User.ModCount++;
             this.db.SaveChanges();
         }
 

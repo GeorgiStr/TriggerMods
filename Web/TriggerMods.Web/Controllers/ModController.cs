@@ -26,10 +26,14 @@ namespace TriggerMods.Web.Controllers
             this.gameService = gameService;
         }
 
+        public IActionResult Details(string Id)
+        {
+            return this.View();
+        }
+
         [Authorize]
         public IActionResult Create(string Id)
         {
-            
             return this.View();
         }
 
@@ -55,7 +59,7 @@ namespace TriggerMods.Web.Controllers
             };
 
             this.modService.Create(mod);
-
+            
             if (model.MainImage != null)
             {
                 var imageUrl = await this.pictureService.UploadImage(model.MainImage, GlobalConstants.MOD_PATH_TEMPLATE, mod.Name, mod.Id);

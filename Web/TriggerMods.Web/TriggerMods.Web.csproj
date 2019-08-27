@@ -40,6 +40,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Areas\Administration\ViewModels\Mod\" />
     <Folder Include="Common\" />
     <Folder Include="wwwroot\images\Games\" />
     <Folder Include="wwwroot\files\" />

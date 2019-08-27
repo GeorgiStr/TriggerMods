@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace TriggerMods.Web.Areas.Administration.ViewModels.Mod
+namespace TriggerMods.Web.ViewModels
 {
     public class ModListingViewModel
     {
@@ -11,6 +12,7 @@ namespace TriggerMods.Web.Areas.Administration.ViewModels.Mod
 
         public string Name { get; set; }
 
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy/MM/dd}")]
         public DateTime CreatedOn { get; set; }
 
         public string Description { get; set; }
