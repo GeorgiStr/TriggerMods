@@ -90,7 +90,20 @@
 
         public IQueryable<Mod> GetAllByGameId(string Id)
         {
-            return this.db.Mods.Include(x => x.User).Where(x => x.GameId == Id);
+            return this.db.Mods
+                .Include(x => x.User)
+                .Where(x => x.GameId == Id);
+        }
+
+        public Mod GetById(string id)
+        {
+            return this.db.Mods
+                .Include(x => x.Comments)
+                .Include(x => x.Files)
+                .Include(x => x.Pictures)
+                .Include(x => x.User)
+                .Include(x => x.Game)
+                .FirstOrDefault(x => x.Id == id);
         }
     }
 }

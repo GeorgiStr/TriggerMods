@@ -16,6 +16,8 @@ namespace TriggerMods.Services
 
         void AddGalleryUrls(string id, List<string> imageUrls);
 
+        Mod GetById(string id);
+
         IQueryable<Mod> GetAllByGameId(string Id);
     }
 }

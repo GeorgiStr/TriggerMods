@@ -7,6 +7,11 @@ namespace TriggerMods.Data.Models
 {
     public class File : BaseModel<string>
     {
+        public string Name { get; set; }
+
+        public string Description { get; set; }
+
+        public double FileSize { get; set; } 
 
         public string FilePath { get; set; }
 

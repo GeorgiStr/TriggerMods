@@ -4,4 +4,67 @@
 @{
 }
 
-<h1>asdasdadadasdasd</h1>
+<style>
+    .row {
+      width: 100%;
+      margin: 0 auto;
+    }
+    .block {
+      width: 15%;
+      display: inline-block;
+    }
+
+    #scrolly{
+      width: 1000px;
+      height: 190px;
+      overflow: auto;
+      overflow-y: hidden;
+      margin: 0 auto;
+      white-space: nowrap
+    }
+
+    img{
+      width: 200px;
+      object-fit: contain;
+      margin: 20px 10px;
+      display: inline;
+    }
+</style>
+<div align="center"><h1>@Model.Name</h1></div>
+
+<hr style="border-width: 3px"/>
+<div class="row mb-0">
+    <div class="block">
+        <div>Uploaded by</div>
+        <div>@Model.UserName</div>
+    </div>
+    <div class="block">
+        <div>Uploaded on</div>
+        <div>@Model.CreatedOn.ToString("dd/MM/yyyy")</div>
+    </div>
+    <div class="block">
+        <div>Votes</div>
+        <div>@Model.VoteCount</div>
+    </div>
+    <div class="block">
+        <div>Views</div>
+        <div>@Model.Views</div>
+    </div>
+    <div class="block">
+        <div>Total DLs</div>
+        <div>@Model.TotalDownloadCount</div>
+    </div>
+    <div class="block">
+        <div>Version</div>
+        <div>@Model.Version</div>
+    </div>
+</div>
+<hr style="border-width: 3px"/>
+
+<div id='scrolly'>
+    @foreach (var image in Model.Pictures)
+    {
+        <a href="@image"><img src=@image></img></a>
+    }
+</div>
+<hr style="border-width: 3px" />

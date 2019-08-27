@@ -8,6 +8,7 @@ using TriggerMods.Common;
 using TriggerMods.Data.Models;
 using TriggerMods.Services;
 using TriggerMods.Web.InputModels;
+using TriggerMods.Web.ViewModels;
 
 namespace TriggerMods.Web.Controllers
 {
@@ -28,7 +29,71 @@ namespace TriggerMods.Web.Controllers
 
         public IActionResult Details(string Id)
         {
-            return this.View();
+            var mod = this.modService.GetById(Id);
+
+            //public string Id { get; set; }
+
+            //public string Name { get; set; }
+
+            //public DateTime CreatedOn { get; set; }
+
+            //public string Version { get; set; }
+
+            //public string Description { get; set; }
+
+            //public string MainPicturePath { get; set; }
+
+            //public int Views { get; set; }
+
+            //public int TotalDownloadCount { get; set; }
+
+            //public int VoteCount { get; set; }
+
+            //public bool Visible { get; set; }
+
+            //public string UserName { get; set; }
+
+            //public string UserId { get; set; }
+
+            //public string GameId { get; set; }
+
+            //public string Game { get; set; }
+
+            //public ICollection<string> Pictures { get; set; }
+
+            //public ICollection<string> Files { get; set; }
+
+            //public ICollection<string> Comments { get; set; }
+            var model = new ModViewModel
+            {
+                Id = mod.Id,
+                Name = mod.Name,
+                CreatedOn = mod.CreatedOn,
+                Version = mod.Version,
+                Description = mod.Description,
+                MainPicturePath = mod.MainPicturePath,
+                Views = mod.Views,
+                TotalDownloadCount = mod.TotalDownloadCount,
+                Visible = mod.Visible,
+                UserName = mod.User.UserName,
+                UserId = mod.UserId,
+                GameId = mod.GameId,
+                Game = mod.Game.Name,
+                Pictures = mod.Pictures.Select(x => x.FilePath).ToList(),
+                Files = mod.Files.Select(x => x.FilePath).ToList(),
+            };
+
+            model.Comments = mod.Comments.Select(x => new CommentsViewModel
+            {
+                Id = x.Id,
+                Content = x.Content,
+                CreatedOn = x.CreatedOn,
+                UserId = x.UserId,
+                UserName = x.User.UserName,
+                ModId = x.ModId,
+            }).ToList();
+
+            return this.View(model);
         }
 
         [Authorize]
