@@ -21,6 +21,7 @@
 
         [Display(Name = "Image")]
         [Required(ErrorMessage = Required)]
+        [ValidateImage]
         public IFormFile MainImage { get; set; }
     }
 }

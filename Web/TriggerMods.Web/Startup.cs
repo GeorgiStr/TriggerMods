@@ -104,6 +104,7 @@
             services.AddTransient<IPictureService, PictureService>();
             services.AddTransient<IModService, ModService>();
             services.AddTransient<IUserService, UserService>();
+            services.AddTransient<ICommentService, CommentService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

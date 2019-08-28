@@ -19,13 +19,28 @@ namespace TriggerMods.Web.Controllers
         private readonly IPictureService pictureService;
         private readonly IUserService userService;
         private readonly IGameService gameService;
+        private readonly ICommentService commentService;
 
-        public ModController(IModService modService, IPictureService pictureService, IUserService userService, IGameService gameService)
+        public ModController(
+            IModService modService, 
+            IPictureService pictureService, 
+            IUserService userService, 
+            IGameService gameService,
+            ICommentService commentService
+            )
         {
             this.modService = modService;
             this.pictureService = pictureService;
             this.userService = userService;
             this.gameService = gameService;
+            this.commentService = commentService;
+        }
+
+        public FileResult Download(string Id)
+        {
+            byte[] fileBytes = System.IO.File.ReadAllBytes(@"c:\folder\myfile.ext");
+            string fileName = "myfile.ext";
+            return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);
         }
 
         public IActionResult Details(string Id)
@@ -79,6 +94,25 @@ namespace TriggerMods.Web.Controllers
         public IActionResult Create(string Id)
         {
             return this.View();
+        }
+
+        [Authorize]
+        [HttpPost]
+        public IActionResult AddComment([FromBody] CommentInputModel model)
+        {
+            var currentUser = this.userService.GetUserByName(this.User.Identity.Name);
+
+            var comment = new Comment
+            {
+                Content = model.Content,
+                UserId = currentUser.Id,
+                ModId = model.Id,
+                CreatedOn = DateTime.Now,
+            };
+
+            this.commentService.CreateComment(comment);
+            return new JsonResult(model);
+            //return this.RedirectToAction(nameof(this.PostDetails), new { Id = model.Id });
         }
 
         [Authorize]

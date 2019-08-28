@@ -29,8 +29,9 @@
         object-fit: contain;
         margin: 20px 10px;
         display: inline;
-    }
+    
 </style>
+<a asp-controller="Game" asp-action="Details" asp-route-id="@Model.GameId">@Model.Game</a>
 <div align="center"><h1>@Model.Name</h1></div>
 
 <hr style="border-width: 3px" />
@@ -75,4 +76,73 @@
 <div><p>@Model.Description</p></div>
 <hr style="border-width: 3px" />
 
+<div align="center">
+    <div class="col-10 col-sm-10 col-md-8 col-lg-7 mb-7" style="padding-bottom: 20px">
+        <div class="card h-100">
+            <!--<input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>-->
+            <textarea id="myTextarea" placeholder="Write a comment..." class="post focus" style="resize: none"></textarea>
+            <div class="card-footer d-flex justify-content-around text-center bg-white pl-0 pr-0 pt-0 pb-0">
 
+                <button onclick="@("myFunction('"+Model.Id+"')")" class="btn btn-primary" data-assigned-id="@Model.Id">Post</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div align="center">
+    @foreach (var comment in Model.Comments)
+    {
+        <div class="col-10 col-sm-10 col-md-8 col-lg-7 mb-7" style="padding-bottom: 20px">
+            <div class="card h-100">
+                <div>
+                    <span class="stars mx-auto pb-1 text">@comment.UserName - @comment.CreatedOn</span>
+                </div>
+
+
+                <textarea id="myTextarea2" class="post focus" style="resize: none" readonly>@comment.Content</textarea>
+            </div>
+        </div>
+    }
+</div>
+
+
+<script>
+    function myFunction(elem) {
+        var Comment = document.getElementById("myTextarea").value;
+        var PostId = elem
+        var data = { Content: Comment, Id: PostId }
+        /*$.ajax({
+            url: 'Post/Test',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(data),
+            success: function () {
+                alert('success');
+            },
+            error: function () {
+                alert(data.Content);
+            }
+        });*/
+        var data2 = { Content: Comment }
+        console.log('Submitting form...');
+        $.ajax({
+            type: 'POST',
+            url: '/Mod/AddComment',
+            dataType: 'json',
+            contentType: 'application/json',
+            data: JSON.stringify(data),
+            success: function (result) {
+                console.log(data);
+                console.log('Data received: ');
+                console.log(result);
+            },
+            error: function (result) {
+                console.log(data);
+                console.log('ERROR');
+                console.log(result);
+            }
+        });
+        document.getElementById("myTextarea").value = "";
+    }
+</script>

@@ -38,6 +38,7 @@
 
         [Display(Name = "Image")]
         [Required(ErrorMessage = Required)]
+        [ValidateImage]
         public IFormFile MainImage { get; set; }
 
         [Required(ErrorMessage = Required)]
@@ -45,6 +46,7 @@
         public IFormFile MainFile { get; set; }
 
         [Required(ErrorMessage = Required)]
+        [ValidateImages]
         public ICollection<IFormFile> Gallery { get; set; }
 
         public string GameId { get; set; }
