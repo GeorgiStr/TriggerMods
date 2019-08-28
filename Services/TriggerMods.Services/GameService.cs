@@ -1,7 +1,7 @@
 ﻿namespace TriggerMods.Services
 {
     using System.Linq;
-
+    using Microsoft.AspNetCore.Http;
     using TriggerMods.Data;
     using TriggerMods.Data.Models;
 
@@ -39,6 +39,13 @@
             this.db.SaveChanges();
         }
 
+        public void EditGame(string id, string name)
+        {
+            var game = this.db.Games.FirstOrDefault(x => x.Id == id);
+            game.Name = name;
+            db.SaveChanges();
+        }
+
         public IQueryable<Game> GetAll()
         {
             return this.db.Games;
@@ -47,6 +54,18 @@
         public Game GetGameById(string Id)
         {
             return this.db.Games.FirstOrDefault(x => x.Id == Id);
+        }
+
+        public string GetGameImageUrlById(string id)
+        {
+            var game = this.db.Games.FirstOrDefault(x => x.Id == id);
+            return game.GamePicturePath;
+        }
+
+        public string GetGameNameById(string id)
+        {
+            var game = this.db.Games.FirstOrDefault(x => x.Id == id);
+            return game.Name;
         }
     }
 }

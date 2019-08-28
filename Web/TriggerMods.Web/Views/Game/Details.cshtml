@@ -14,12 +14,13 @@
     }
 </style>
 
+<div align="center"><h1>@Model.Game</h1></div>
 <div align="center" style="padding-bottom:20px;">
     <a asp-controller="Mod" asp-action="Create" class="btn btn-primary btn-md" asp-route-id="@Id["Id"]">Upload</a>
 </div>
 
 <div class="row">
-    @foreach (var mod in Model)
+    @foreach (var mod in Model.Mods)
     {
         <div class="col-6 col-sm-6 col-md-4 col-lg-3 mb-3">
             <div class="card h-100">

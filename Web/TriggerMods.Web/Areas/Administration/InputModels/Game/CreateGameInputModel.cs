@@ -23,5 +23,7 @@
         [Required(ErrorMessage = Required)]
         [ValidateImage]
         public IFormFile MainImage { get; set; }
+
+        public string Id { get; set; }
     }
 }

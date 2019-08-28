@@ -1,12 +1,12 @@
-﻿using Microsoft.AspNetCore.Http;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace TriggerMods.Web.InputModels
+﻿namespace TriggerMods.Web.InputModels
 {
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+    using System.Linq;
+
+    using Microsoft.AspNetCore.Http;
+
     public class ValidateImagesAttribute : ValidationAttribute
     {
         private const string FileNotFoundMessage = "File not found.";

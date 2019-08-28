@@ -21,10 +21,12 @@ namespace TriggerMods.Web.Controllers
 
         public IActionResult Details(string id)
         {
-            var viewModel = this.modService.GetAllByGameId(id).Select(x => new ModListingViewModel
+            var viewModel = new ListOfModsViewModel();
+            viewModel.Mods = this.modService.GetAllByGameId(id).Select(x => new ModListingViewModel
             {
                 Id = x.Id,
                 Name = x.Name,
+                Game = x.Game.Name,
                 CreatedOn = x.CreatedOn,
                 Description = x.Description,
                 MainPicturePath = x.MainPicturePath,
@@ -33,6 +35,8 @@ namespace TriggerMods.Web.Controllers
                 VoteCount = x.VoteCount,
                 Visible = x.Visible,
             }).ToList();
+
+            viewModel.Game = this.gameService.GetGameNameById(id);
 
             return this.View(viewModel);
         }

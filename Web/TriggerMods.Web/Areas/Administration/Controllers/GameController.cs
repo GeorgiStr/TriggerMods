@@ -36,6 +36,35 @@ namespace TriggerMods.Web.Areas.Administration.Controllers
             return this.View(viewModel);
         }
 
+        public IActionResult Edit(string id)
+        {
+            var game = this.gameService.GetGameById(id);
+            var model = new EditGameInputModel
+            {
+                Name = game.Name,
+                Id = game.Id,
+            };
+            return this.View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(EditGameInputModel inputModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return this.View();
+            }
+            this.gameService.EditGame(inputModel.Id, inputModel.Name);
+            if (inputModel.MainImage != null)
+            {
+                var imageUrl = await this.pictureService.UploadImage(inputModel.MainImage, GlobalConstants.GAME_PATH_TEMPLATE, inputModel.Name, inputModel.Id);
+
+                this.gameService.AddImageUrl(inputModel.Id, imageUrl);
+            }
+
+            return this.RedirectToAction("GameList");
+        }
+
         public IActionResult Create()
         {
             return this.View();

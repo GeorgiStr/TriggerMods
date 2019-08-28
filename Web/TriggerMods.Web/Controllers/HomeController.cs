@@ -1,7 +1,8 @@
 ﻿namespace TriggerMods.Web.Controllers
 {
-    using Microsoft.AspNetCore.Mvc;
     using System.Linq;
+
+    using Microsoft.AspNetCore.Mvc;
     using TriggerMods.Services;
     using TriggerMods.Web.ViewModels;
 
@@ -13,6 +14,7 @@
         {
             this.gameService = gameService;
         }
+
         public IActionResult Index()
         {
             var viewModel = this.gameService.GetAll().Select(x => new GameViewModel

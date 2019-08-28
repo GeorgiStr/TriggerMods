@@ -12,6 +12,8 @@ namespace TriggerMods.Web.ViewModels
 
         public string Name { get; set; }
 
+        public string Game { get; set; }
+
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy/MM/dd}")]
         public DateTime CreatedOn { get; set; }
 

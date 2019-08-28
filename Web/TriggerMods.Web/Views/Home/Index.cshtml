@@ -23,8 +23,8 @@
                     <li class="list-group-item text-center font-weight-bold text-danger">@game.Name</li>
                 </div>
                 <a asp-controller="Game" asp-action="Details" asp-route-id="@game.Id">
-                    <div class="card-img-top zoom" >
-                        <img src="@game.GamePicturePath" height="42%" alt="@game.Name">
+                    <div class="card-img-top zoom" style="height: 200px">
+                        <img src="@game.GamePicturePath" height="100%" alt="@game.Name">
                     </div>
                 </a>
                 <div class="card-body text-center h-25 pb-0 pt-0 pl-0 pr-0">
