@@ -116,5 +116,11 @@
             mod.Views++;
             db.SaveChanges();
         }
+
+        public IQueryable<Mod> GetAllByUserName(string name)
+        {
+            return this.db.Mods
+                .Where(x => x.User.UserName == name);
+        }
     }
 }

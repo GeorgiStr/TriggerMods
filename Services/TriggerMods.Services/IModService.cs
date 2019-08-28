@@ -22,5 +22,7 @@ namespace TriggerMods.Services
         Mod GetById(string id);
 
         IQueryable<Mod> GetAllByGameId(string Id);
+
+        IQueryable<Mod> GetAllByUserName(string name);
     }
 }

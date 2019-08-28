@@ -1,0 +1,58 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<div>
+    <partial name="_UserProfileOptions" />
+</div>
+
+<h1>My Mods</h1>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+    img {
+        width: 100%;
+        object-fit: contain;
+    }
+</style>
+
+
+
+<div class="row">
+    @foreach (var mod in Model)
+    {
+        <div class="col-6 col-sm-6 col-md-4 col-lg-3 mb-3">
+            <div class="card h-100">
+                <div class="mt-0">
+                    <li class="list-group-item text-center font-weight-bold text-danger">@mod.Name</li>
+                </div>
+                <a asp-controller="Mod" asp-action="Details" asp-route-id="@mod.Id">
+                    <div class="card-img-top zoom" style="height: 200px">
+                        <img src="@mod.MainPicturePath" height="100%" alt="@mod.Name">
+                    </div>
+                </a>
+                <div class="meta clearfix" style="font-size: 11pt">
+                    &nbsp;&nbsp;
+                    <time class="date">
+                        <span class="label">Uploaded: </span>
+                        @mod.CreatedOn.ToString("dd/MM/yyyy")
+                    </time>
+
+                    <div class="author">&nbsp;&nbsp;&nbsp;<span class="label">Uploader: </span> <a href="/">@mod.UploaderName</a></div>
+                </div>
+                <div class="card-body text-center h-25 pb-0 pt-0 pl-0 pr-0">
+                    <div class="mt-0">
+                        <li class="list-group-item text-center font-weight-bold text-danger">
+                            <div class="d-flex" style="height: 10px">
+                                <i class="fa fa-thumbs-up">&nbsp;&nbsp;@mod.VoteCount</i>&nbsp;&nbsp;&nbsp;&nbsp;
+                                <i class="fa fa-download">&nbsp;&nbsp;@mod.TotalDownloadCount</i>
+                            </div>
+                        </li>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>

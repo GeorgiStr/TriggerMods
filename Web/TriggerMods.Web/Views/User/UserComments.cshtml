@@ -1,0 +1,34 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+    <div>
+        <partial name="_UserProfileOptions" />
+    </div>
+
+<h1>My Comments</h1>
+
+<div align="center">
+    @foreach (var comment in Model)
+    {
+        <div class="col-10 col-sm-10 col-md-8 col-lg-7 mb-7" style="padding-bottom: 20px">
+            <div class="card h-100">
+                <div>
+                    <span class="stars mx-auto pb-1 text">@comment.CreatedOn</span>
+                </div>
+
+
+                <textarea id="myTextarea" class="post focus" style="resize: none" readonly>@comment.Content</textarea>
+
+
+                <div class="card-footer justify-content-around text-center bg-white pl-0 pr-0 pt-0 pb-0" >
+                    <label>
+                        <a asp-controller="Mod" asp-action="Details" asp-route-id="@comment.ModId" class="btn btn-primary">Go to mod</a>
+                    </label>
+                </div>
+            </div>
+        </div>
+    }
+</div>
