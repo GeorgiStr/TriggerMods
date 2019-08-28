@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -31,39 +32,6 @@ namespace TriggerMods.Web.Controllers
         {
             var mod = this.modService.GetById(Id);
 
-            //public string Id { get; set; }
-
-            //public string Name { get; set; }
-
-            //public DateTime CreatedOn { get; set; }
-
-            //public string Version { get; set; }
-
-            //public string Description { get; set; }
-
-            //public string MainPicturePath { get; set; }
-
-            //public int Views { get; set; }
-
-            //public int TotalDownloadCount { get; set; }
-
-            //public int VoteCount { get; set; }
-
-            //public bool Visible { get; set; }
-
-            //public string UserName { get; set; }
-
-            //public string UserId { get; set; }
-
-            //public string GameId { get; set; }
-
-            //public string Game { get; set; }
-
-            //public ICollection<string> Pictures { get; set; }
-
-            //public ICollection<string> Files { get; set; }
-
-            //public ICollection<string> Comments { get; set; }
             var model = new ModViewModel
             {
                 Id = mod.Id,
@@ -80,7 +48,6 @@ namespace TriggerMods.Web.Controllers
                 GameId = mod.GameId,
                 Game = mod.Game.Name,
                 Pictures = mod.Pictures.Select(x => x.FilePath).ToList(),
-                Files = mod.Files.Select(x => x.FilePath).ToList(),
             };
 
             model.Comments = mod.Comments.Select(x => new CommentsViewModel
@@ -93,6 +60,18 @@ namespace TriggerMods.Web.Controllers
                 ModId = x.ModId,
             }).ToList();
 
+            model.Files = mod.Files.Select(x => new FileViewModel
+            {
+                Id = x.Id,
+                Name = x.Name,
+                Description = x.Description,
+                FileSize = x.FileSize,
+                FilePath = x.FilePath,
+                Status = x.Status,
+                DownlaodCount = x.DownlaodCount,
+                ModId = x.ModId,
+            }).ToList();
+            this.modService.ViewUp(mod.Id);
             return this.View(model);
         }
 
@@ -136,7 +115,7 @@ namespace TriggerMods.Web.Controllers
             {
                 var fileUrl = await this.pictureService.UploadFile(model.MainFile, GlobalConstants.File_PATH_TEMPLATE, mod.Name, mod.Id);
 
-                this.modService.AddFileUrl(mod.Id, fileUrl);
+                this.modService.AddFileUrl(mod.Id, fileUrl, model.FileName, model.FileDescription, model.MainFile);
             }
 
             if (model.Gallery != null)

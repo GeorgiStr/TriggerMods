@@ -1,5 +1,6 @@
 ﻿namespace TriggerMods.Services
 {
+    using Microsoft.AspNetCore.Http;
     using Microsoft.EntityFrameworkCore;
     using System;
     using System.Collections.Generic;
@@ -45,13 +46,16 @@
             this.db.SaveChanges();
         }
 
-        public void AddFileUrl(string id, string fileUrl)
+        public void AddFileUrl(string id, string fileUrl, string fileName, string fileFileDescription, IFormFile MainFile)
         {
             var mod = this.db.Mods.FirstOrDefault(x => x.Id == id);
             var file = new File
             {
                 CreatedOn = DateTime.Now,
                 FilePath = fileUrl,
+                Name = fileName,
+                Description = fileFileDescription,
+                FileSize = MainFile.Length / 1024,
                 Status = FileStatus.Main,
                 Mod = mod,
             };
@@ -104,6 +108,13 @@
                 .Include(x => x.User)
                 .Include(x => x.Game)
                 .FirstOrDefault(x => x.Id == id);
+        }
+
+        public void ViewUp(string id)
+        {
+            var mod = this.db.Mods.FirstOrDefault(x => x.Id == id);
+            mod.Views++;
+            db.SaveChanges();
         }
     }
 }

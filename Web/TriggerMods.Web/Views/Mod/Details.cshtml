@@ -6,33 +6,34 @@
 
 <style>
     .row {
-      width: 100%;
-      margin: 0 auto;
+        width: 100%;
+        margin: 0 auto;
     }
+
     .block {
-      width: 15%;
-      display: inline-block;
+        width: 15%;
+        display: inline-block;
     }
 
-    #scrolly{
-      width: 1000px;
-      height: 190px;
-      overflow: auto;
-      overflow-y: hidden;
-      margin: 0 auto;
-      white-space: nowrap
+    #scrolly {
+        width: 1000px;
+        height: 190px;
+        overflow: auto;
+        overflow-y: hidden;
+        margin: 0 auto;
+        white-space: nowrap
     }
 
-    img{
-      width: 200px;
-      object-fit: contain;
-      margin: 20px 10px;
-      display: inline;
+    img {
+        width: 200px;
+        object-fit: contain;
+        margin: 20px 10px;
+        display: inline;
     }
 </style>
 <div align="center"><h1>@Model.Name</h1></div>
 
-<hr style="border-width: 3px"/>
+<hr style="border-width: 3px" />
 <div class="row mb-0">
     <div class="block">
         <div>Uploaded by</div>
@@ -59,7 +60,7 @@
         <div>@Model.Version</div>
     </div>
 </div>
-<hr style="border-width: 3px"/>
+<hr style="border-width: 3px" />
 
 <div id='scrolly'>
     @foreach (var image in Model.Pictures)
@@ -68,3 +69,10 @@
     }
 </div>
 <hr style="border-width: 3px" />
+
+<div><h3>Description</h3></div>
+<hr style="border-width: 1px" />
+<div><p>@Model.Description</p></div>
+<hr style="border-width: 3px" />
+
+

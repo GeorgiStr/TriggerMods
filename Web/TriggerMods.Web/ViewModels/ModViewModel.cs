@@ -37,7 +37,7 @@ namespace TriggerMods.Web.ViewModels
 
         public ICollection<string> Pictures { get; set; }
 
-        public ICollection<string> Files { get; set; }
+        public ICollection<FileViewModel> Files { get; set; }
 
         public ICollection<CommentsViewModel> Comments { get; set; }
     }

@@ -28,6 +28,14 @@
         [StringLength(DescriptionMaxLength, MinimumLength = DescriptionMinLength, ErrorMessage = InputLength)]
         public string Description { get; set; }
 
+        [Required(ErrorMessage = Required)]
+        [StringLength(NameMaxLength, MinimumLength = NameMinLength, ErrorMessage = InputLength)]
+        public string FileName { get; set; }
+
+        [Required(ErrorMessage = Required)]
+        [StringLength(DescriptionMaxLength, MinimumLength = DescriptionMinLength, ErrorMessage = InputLength)]
+        public string FileDescription { get; set; }
+
         [Display(Name = "Image")]
         [Required(ErrorMessage = Required)]
         public IFormFile MainImage { get; set; }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,9 +13,11 @@ namespace TriggerMods.Services
 
         void AddImageUrl(string id, string imageUrl);
 
-        void AddFileUrl(string id, string imageUrl);
+        void AddFileUrl(string id, string imageUrl, string fileName, string fileFileDescription, IFormFile MainFile);
 
         void AddGalleryUrls(string id, List<string> imageUrls);
+
+        void ViewUp(string id);
 
         Mod GetById(string id);
 
