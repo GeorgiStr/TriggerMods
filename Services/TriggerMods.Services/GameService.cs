@@ -7,6 +7,7 @@
 
     public class GameService : IGameService
     {
+        private const string Uncategorized = "Uncategorized";
         private readonly ApplicationDbContext db;
 
         public GameService(ApplicationDbContext db)
@@ -39,6 +40,23 @@
             this.db.SaveChanges();
         }
 
+        public void DeleteGame(string id)
+        {
+            var game = this.GetGameById(id);
+            var uncategorized = this.GetGameByName(Uncategorized);
+
+            var mods = this.db.Mods.Where(x => x.GameId == id).ToList();
+
+            for (int i = 0; i < mods.Count; i++)
+            {
+                mods[i].GameId = uncategorized.Id;
+                uncategorized.ModCount++;
+            }
+
+            this.db.Games.Remove(game);
+            this.db.SaveChanges();
+        }
+
         public void EditGame(string id, string name)
         {
             var game = this.db.Games.FirstOrDefault(x => x.Id == id);
@@ -54,6 +72,11 @@
         public Game GetGameById(string Id)
         {
             return this.db.Games.FirstOrDefault(x => x.Id == Id);
+        }
+
+        public Game GetGameByName(string name)
+        {
+            return this.db.Games.FirstOrDefault(x => x.Name == name);
         }
 
         public string GetGameImageUrlById(string id)

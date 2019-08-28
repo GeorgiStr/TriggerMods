@@ -1,12 +1,11 @@
-﻿using Microsoft.AspNetCore.Http;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using TriggerMods.Data.Models;
-
-namespace TriggerMods.Services
+﻿namespace TriggerMods.Services
 {
+    using System.Collections.Generic;
+    using System.Linq;
+
+    using Microsoft.AspNetCore.Http;
+    using TriggerMods.Data.Models;
+
     public interface IModService
     {
         void Create(Mod mod);
@@ -19,9 +18,21 @@ namespace TriggerMods.Services
 
         void ViewUp(string id);
 
+        void Edit(string id, string name, string version, string description);
+
+        void Delete(string id);
+
+        void RemoveImagesOnEdit(string id);
+
+        void DeleteImages(string id);
+
+        void DeleteFiles(string id);
+
         Mod GetById(string id);
 
         IQueryable<Mod> GetAllByGameId(string Id);
+
+        IList<string> GetGalleryUrlsById(string Id);
 
         IQueryable<Mod> GetAllByUserName(string name);
     }

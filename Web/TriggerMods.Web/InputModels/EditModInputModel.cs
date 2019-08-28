@@ -33,12 +33,16 @@
         [ValidateImageNR]
         public IFormFile MainImage { get; set; }
 
-        [ValidateFile]
+        [ValidateFileNR]
         public IFormFile MainFile { get; set; }
 
-        [ValidateImages]
+        [ValidateImagesNR]
         public ICollection<IFormFile> Gallery { get; set; }
 
+        public ICollection<string> GalleryUrls { get; set; }
+
         public string GameId { get; set; }
+
+        public string Id { get; set; }
     }
 }

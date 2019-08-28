@@ -65,6 +65,26 @@ namespace TriggerMods.Web.Areas.Administration.Controllers
             return this.RedirectToAction("GameList");
         }
 
+        public IActionResult Delete(string id)
+        {
+            var game = this.gameService.GetGameById(id);
+            var model = new GameListingModel
+            {
+                Name = game.Name,
+                Id = game.Id,
+                ModCount = game.ModCount,
+            };
+            return this.View(model);
+        }
+
+        [HttpPost]
+        public IActionResult Delete(GameListingModel model)
+        {
+            this.gameService.DeleteGame(model.Id);
+
+            return this.RedirectToAction("GameList");
+        }
+
         public IActionResult Create()
         {
             return this.View();

@@ -1,0 +1,35 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+
+@model TriggerMods.Web.ViewModels.DeleteModViewModel
+<style>
+    img {
+        width: 100%;
+        object-fit: contain;
+    }
+</style>
+
+<div align="center">
+    <div class="col-md-6">
+        <form asp-controller="Mod" asp-action="Delete" enctype="multipart/form-data" method="post" class="form border-primary-4 rounded p-3 w-30 mx-auto mt-3">
+            <h4>Delete Mod</h4>
+            <hr />
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+
+                <input asp-for="Name" class="form-control text-center" readonly />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <img src="@Model.MainImageUrl" />
+            </div>
+
+            <button type="submit" class="btn btn-primary">Delete</button>
+        </form>
+    </div>
+</div>

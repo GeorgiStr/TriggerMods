@@ -1,12 +1,11 @@
 ﻿namespace TriggerMods.Services
 {
-    using Microsoft.AspNetCore.Http;
-    using Microsoft.EntityFrameworkCore;
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Text;
 
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.EntityFrameworkCore;
     using TriggerMods.Data;
     using TriggerMods.Data.Models;
 
@@ -114,13 +113,57 @@
         {
             var mod = this.db.Mods.FirstOrDefault(x => x.Id == id);
             mod.Views++;
-            db.SaveChanges();
+            this.db.SaveChanges();
         }
 
         public IQueryable<Mod> GetAllByUserName(string name)
         {
             return this.db.Mods
                 .Where(x => x.User.UserName == name);
+        }
+
+        public IList<string> GetGalleryUrlsById(string Id)
+        {
+            return this.db.Pictures.Where(x => x.ModId == Id).Select(x => x.FilePath).ToList();
+        }
+
+        public void Edit(string id, string name, string version, string description)
+        {
+            var mod = this.GetById(id);
+            mod.Name = name;
+            mod.Version = version;
+            mod.Description = description;
+            this.db.SaveChanges();
+        }
+
+        public void RemoveImagesOnEdit(string id)
+        {
+            var images = this.db.Pictures.Where(x => x.ModId == id);
+            this.db.Pictures.RemoveRange(images);
+            this.db.SaveChanges();
+        }
+
+        public void Delete(string id)
+        {
+            var mod = this.GetById(id);
+            var game = this.db.Games.FirstOrDefault(x => x.Id == mod.GameId);
+            game.ModCount--;
+            this.db.Mods.Remove(mod);
+            this.db.SaveChanges();
+        }
+
+        public void DeleteImages(string id)
+        {
+            var images = this.db.Pictures.Where(x => x.ModId == id);
+            this.db.Pictures.RemoveRange(images);
+            this.db.SaveChanges();
+        }
+
+        public void DeleteFiles(string id)
+        {
+            var files = this.db.Files.Where(x => x.ModId == id);
+            this.db.Files.RemoveRange(files);
+            this.db.SaveChanges();
         }
     }
 }

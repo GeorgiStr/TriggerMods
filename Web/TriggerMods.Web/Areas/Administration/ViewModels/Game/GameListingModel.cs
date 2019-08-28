@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace TriggerMods.Web.Areas.Administration.ViewModels.Game
+﻿namespace TriggerMods.Web.Areas.Administration.ViewModels.Game
 {
     public class GameListingModel
     {

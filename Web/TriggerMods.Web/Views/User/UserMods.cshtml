@@ -50,6 +50,8 @@
                                 <i class="fa fa-download">&nbsp;&nbsp;@mod.TotalDownloadCount</i>
                             </div>
                         </li>
+                        <a asp-controller="Mod" asp-action="Edit" asp-route-id="@mod.Id" class="btn btn-primary btn-md">Edit</a>
+                        <a asp-controller="Mod" asp-action="Delete" asp-route-id="@mod.Id" class="btn btn-primary btn-md">Delete</a>
                     </div>
                 </div>
             </div>

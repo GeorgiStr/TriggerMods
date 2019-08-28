@@ -27,7 +27,7 @@
             <td class="col-lg-2">
                 <div class="button-holder">
                     <a asp-controller="Game" asp-action="Edit" asp-route-id="@game.Id" class="btn btn-primary btn-md">Edit</a>
-                    <a href="/Carts/AddProduct?productId=@game.Id" class="btn btn-outline-primary">Delete</a>
+                    <a asp-controller="Game" asp-action="Delete" asp-route-id="@game.Id" class="btn btn-primary btn-md">Delete</a>
                 </div>
             </td>
         </tr>

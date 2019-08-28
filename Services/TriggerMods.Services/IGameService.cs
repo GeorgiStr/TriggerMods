@@ -17,7 +17,11 @@ namespace TriggerMods.Services
 
         string GetGameNameById(string id);
 
+        Game GetGameByName(string name);
+
         void EditGame(string id, string name);
+
+        void DeleteGame(string id);
 
         IQueryable<Game> GetAll();
 

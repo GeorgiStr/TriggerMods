@@ -47,6 +47,11 @@ namespace TriggerMods.Web.Controllers
         {
             var mod = this.modService.GetById(Id);
 
+            if(mod == null)
+            {
+                return this.View("MissingMod");
+            }
+
             var model = new ModViewModel
             {
                 Id = mod.Id,
@@ -91,12 +96,6 @@ namespace TriggerMods.Web.Controllers
         }
 
         [Authorize]
-        public IActionResult Create(string Id)
-        {
-            return this.View();
-        }
-
-        [Authorize]
         [HttpPost]
         public IActionResult AddComment([FromBody] CommentInputModel model)
         {
@@ -113,6 +112,88 @@ namespace TriggerMods.Web.Controllers
             this.commentService.CreateComment(comment);
             return new JsonResult(model);
             //return this.RedirectToAction(nameof(this.PostDetails), new { Id = model.Id });
+        }
+
+        [Authorize]
+        public IActionResult Delete(string id)
+        {
+            var mod = this.modService.GetById(id);
+            var model = new DeleteModViewModel
+            {
+                Id = mod.Id,
+                Name = mod.Name,
+                MainImageUrl = mod.MainPicturePath,
+            };
+            return this.View(model);
+        }
+
+        [Authorize]
+        [HttpPost]
+        public IActionResult Delete(EditModInputModel model)
+        {
+            this.modService.DeleteImages(model.Id);
+            this.modService.DeleteFiles(model.Id);
+            this.modService.Delete(model.Id);
+            return this.Redirect("/");
+        }
+
+        [Authorize]
+        public IActionResult Edit(string id)
+        {
+            var mod = this.modService.GetById(id);
+            var model = new EditModInputModel
+            {
+                Id = mod.Id,
+                Name = mod.Name,
+                Version = mod.Version,
+                Description = mod.Description,
+            };
+            model.GalleryUrls = this.modService.GetGalleryUrlsById(id);
+            return this.View(model);
+        }
+
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> Edit(EditModInputModel model)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                return this.View();
+            }
+
+            this.modService.Edit(model.Id, model.Name, model.Version, model.Description);
+            
+
+            if (model.MainImage != null)
+            {
+                var imageUrl = await this.pictureService.UploadImage(model.MainImage, GlobalConstants.MOD_PATH_TEMPLATE, model.Name, model.Id);
+
+                this.modService.AddImageUrl(model.Id, imageUrl);
+            }
+
+            if (model.MainFile != null)
+            {
+                var fileUrl = await this.pictureService.UploadFile(model.MainFile, GlobalConstants.File_PATH_TEMPLATE, model.Name, model.Id);
+
+                this.modService.AddFileUrl(model.Id, fileUrl, model.FileName, model.FileDescription, model.MainFile);
+            }
+
+            if (model.Gallery != null)
+            {
+                this.modService.RemoveImagesOnEdit(model.Id);
+
+                var fileUrls = await this.pictureService.UploadImages(model.Gallery.ToList(), GlobalConstants.MOD_G_PATH_TEMPLATE, model.Name, model.Id);
+
+                this.modService.AddGalleryUrls(model.Id, fileUrls.ToList());
+            }
+
+            return this.Redirect("/");
+        }
+
+        [Authorize]
+        public IActionResult Create(string Id)
+        {
+            return this.View();
         }
 
         [Authorize]
