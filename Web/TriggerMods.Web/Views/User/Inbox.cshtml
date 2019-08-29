@@ -1,0 +1,214 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<div>
+    <partial name="_UserProfileOptions" />
+</div>
+
+@{ 
+    int i = 0;
+    int c1 = 0;
+    int c2 = 1;
+    int c3 = 2;
+    int c4 = 3;
+    int c5 = 4;
+}
+
+<style>
+    /* The Modal (background) */
+    .modal {
+        display: none; /* Hidden by default */
+        position: fixed; /* Stay in place */
+        z-index: 1; /* Sit on top */
+        padding-top: 100px; /* Location of the box */
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        overflow: auto; /* Enable scroll if needed */
+        background-color: rgb(0,0,0); /* Fallback color */
+        background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    }
+    /* Modal Content */
+    .modal-content {
+        background-color: #fefefe;
+        margin: auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 60%;
+    }
+    /* The Close Button */
+    .close {
+        color: #aaaaaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+        .close:hover,
+        .close:focus {
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
+        }
+       blockquote:before,
+blockquote:after {
+	
+	color: #111;
+	font-size: 2rem;
+	width: 4rem;
+	height: 4rem;
+}
+
+blockquote:before {
+	content: '“';
+	left: -5rem;
+	top: -2rem;
+}
+
+blockquote:after {
+	content: '”';
+	right: -5rem;
+	bottom: -1rem;
+}
+
+
+</style>
+
+<div>
+    <div style="float: left; width: 50%;">
+        <div align="center"><h3>Sent messages</h3></div>
+        <table class="table">
+            <thead>
+                <tr class="row" >
+                    <th scope="col" class="col-lg-3">Sent to</th>
+                    <th scope="col" class="col-lg-3">Subject</th>
+                    <th scope="col" class="col-lg-3">Date</th>
+                    <th scope="col" class="col-lg-2"></th>
+                </tr>
+            </thead>
+            <tbody >
+                @foreach (var message in Model.Sent)
+                {
+                <div style="display: none;">
+                    @(c1 = i)
+                    @(c2 = i + 1)
+                    @(c3 = i + 2)
+                    @(c4 = i + 3)
+                    @(c5 = i + 4)
+                    <p id="@c1">@message.ReceiverName</p>
+                    <p id="@c2">@message.CreatedOn</p>
+                    <p id="@c3">@message.Caption</p>
+                    <p id="@c4">@message.Quote</p>
+                    <p id="@c5">@message.Content</p>
+
+                </div>
+                    <tr class="row">
+                        <td class="col-lg-3">@message.ReceiverName</td>
+                        <td class="col-lg-3">@message.Caption</td>
+                        <td class="col-lg-3">@message.CreatedOn</td>
+                        <td class="col-lg-2">
+                            <div class="button-holder">
+
+                                <a asp-controller="PrivateMessage" asp-action="Delete" asp-route-id="@message.Id" class="btn btn-primary btn-md" style="padding: 0px 0px;">Delete</a>
+                                <button onclick="@("buttonFunc('"+c1+"','"+c2+"','"+c3+"','"+c4+"','"+c5+"')")" class="btn btn-primary btn-md" style="padding: 0px 0px;">View</button>
+                            </div>
+                        </td>
+                    </tr>
+                    i = i + 7;
+                }
+            </tbody>
+        </table>
+    </div>
+    <div style="float: right; width: 50%;">
+        <div align="center"><h3>Received messages</h3></div>
+        <table class="table">
+            <thead>
+                <tr class="row">
+                    <th scope="col" class="col-lg-3">From</th>
+                    <th scope="col" class="col-lg-3">Subject</th>
+                    <th scope="col" class="col-lg-3">Date</th>
+                    <th scope="col" class="col-lg-2"></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var message in Model.Received)
+                {
+                <div style="display: none;">
+                    @(c1 = i)
+                    @(c2 = i + 1)
+                    @(c3 = i + 2)
+                    @(c4 = i + 3)
+                    @(c5 = i + 4)
+                    <p id="@c1">@message.SenderName</p>
+                    <p id="@c2">@message.CreatedOn</p>
+                    <p id="@c3">@message.Caption</p>
+                    <p id="@c4">@message.Quote</p>
+                    <p id="@c5">@message.Content</p>
+
+                </div>
+                    <tr class="row">
+                        <td class="col-lg-3">@message.SenderName</td>
+                        <td class="col-lg-3">@message.Caption</td>
+                        <td class="col-lg-3">@message.CreatedOn</td>
+                        <td class="col-lg-2">
+                            <div class="button-holder">
+                                <a asp-controller="PrivateMessage" asp-action="Reply" asp-route-id="@message.Id" class="btn btn-primary btn-md" style="padding: 0px 0px;">Reply</a>
+                                <a asp-controller="PrivateMessage" asp-action="Delete" asp-route-id="@message.Id" class="btn btn-primary btn-md" style="padding: 0px 0px;">Delete</a>
+                                <button onclick="@("buttonFunc('"+c1+"','"+c2+"','"+c3+"','"+c4+"','"+c5+"')")" class="btn btn-primary btn-md" style="padding: 0px 0px;">View</button>
+                            </div>
+                        </td>
+                    </tr>
+                    i = i + 7;
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div id="myModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <div style="float: right; width: 50%;"><p id="toChangeName"></p></div>
+        <div style="float: right; width: 50%;"><p id="toChangeDate"></p></div>
+        <div><p id="toChangeCaption" style="font-weight: bold; font-size: 120%; "></p></div>
+        <blockquote class="ludwig" id="toChangeQuote" style="font-style: italic;"></blockquote>
+        <div><p id="toChangeContent"></p></div>
+    </div>
+</div>
+
+<script>
+    var modal = document.getElementById("myModal");
+    var ptc1 = document.getElementById("toChangeName");
+    var ptc2 = document.getElementById("toChangeDate");
+    var ptc3 = document.getElementById("toChangeCaption");
+    var ptc4 = document.getElementById("toChangeQuote");
+    var ptc5 = document.getElementById("toChangeContent");
+    var span = document.getElementsByClassName("close")[0];
+    function buttonFunc(e1, e2, e3, e4, e5) {
+        
+        modal.style.display = "block";
+        var p1 = document.getElementById(e1);
+        var p2 = document.getElementById(e2);
+        var p3 = document.getElementById(e3);
+        var p4 = document.getElementById(e4);
+        var p5 = document.getElementById(e5);
+        ptc1.innerHTML = "User: " + p1.innerHTML;
+        ptc2.innerHTML = p2.innerHTML;
+        ptc3.innerHTML = p3.innerHTML;
+        ptc4.innerHTML = p4.innerHTML;
+        ptc5.innerHTML = p5.innerHTML;
+    }
+
+    span.onclick = function () {
+        modal.style.display = "none";
+    }
+    window.onclick = function (event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+</script>

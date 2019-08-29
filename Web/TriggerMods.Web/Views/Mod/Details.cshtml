@@ -38,7 +38,7 @@
 <div class="row mb-0">
     <div class="block">
         <div>Uploaded by</div>
-        <div>@Model.UserName</div>
+        <div><a asp-area="" asp-controller="User" asp-action="UserMods" asp-route-Id="@Model.UserName"> @Model.UserName</a></div>
     </div>
     <div class="block">
         <div>Uploaded on</div>
@@ -101,7 +101,9 @@
         <div class="col-10 col-sm-10 col-md-8 col-lg-7 mb-7" style="padding-bottom: 20px">
             <div class="card h-100">
                 <div>
-                    <span class="stars mx-auto pb-1 text">@comment.UserName - @comment.CreatedOn</span>
+                    <span class="stars mx-auto pb-1 text">
+                        <a asp-area="" asp-controller="User" asp-action="UserMods" asp-route-Id="@comment.UserName"> @comment.UserName</a> - @comment.CreatedOn
+                    </span>
                 </div>
 
 

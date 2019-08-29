@@ -1,0 +1,83 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@using TriggerMods.Web.InputModels
+@model TriggerMods.Web.InputModels.PrivateMessageInputModel
+
+@{
+    ViewData["Title"] = "Send PM";
+    var UrlId = Url.ActionContext.RouteData.Values;
+}
+
+
+<style>
+    img {
+        height: 300px;
+        width: 300px;
+        object-fit: contain;
+    }
+
+    /*label#add-image {
+        padding: 10px;
+        background: black;
+        display: table;
+        color: #3090ff;
+    }
+
+
+
+    input[type="file"]#gallery-photo-add {
+        display: none;
+    }*/
+</style>
+
+
+<div align="center">
+    <div class="col-md-6">
+        <form asp-controller="PrivateMessage" asp-action="Create" enctype="multipart/form-data" method="post" class="form border-primary-4 rounded p-3 w-30 mx-auto mt-3">
+            <h4>Send a private message</h4>
+            <hr />
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <input asp-for="Caption" class="form-control" placeholder="Subject..." />
+                <span asp-validation-for="Caption" class="text-danger"></span>
+            </div>
+            @if (@UrlId["id"].ToString().Length > 30)
+            {
+                <div class="form-group">
+                    <p>@Model.Quote</p>
+                </div>
+            }
+
+            <div class="form-group">
+                <textarea asp-for="Content" class="form-control" placeholder="Message..." style="resize: vertical;" rows="8"></textarea>
+                <span asp-validation-for="Content" class="text-danger"></span>
+            </div>
+
+            <div class="form-group" style="display: none">
+                <input asp-for="Quote" class="form-control" />
+            </div>
+
+
+
+            @if (@UrlId["id"].ToString().Length > 30)
+            {
+                <div class="form-group" style="display: none">
+                    <input asp-for="Receiver" class="form-control" />
+                </div>
+            }
+            else
+            {
+                <div class="form-group" style="display: none">
+                    <input asp-for="Receiver" class="form-control" value=@UrlId["id"] />
+                </div>
+            }
+
+
+            <button type="submit" class="btn btn-primary">Send</button>
+        </form>
+    </div>
+</div>

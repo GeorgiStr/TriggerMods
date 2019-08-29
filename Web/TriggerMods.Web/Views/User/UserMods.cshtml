@@ -4,18 +4,27 @@
 @{
     var Name = Url.ActionContext.RouteData.Values;
 }
-
-@if (User.Identity.Name.Equals(Name["Id"]))
+@if (User.Identity.IsAuthenticated)
 {
-    <div>
-        <partial name="_UserProfileOptions" />
-    </div>
-    <h1>My Mods</h1>
+    @if (User.Identity.Name.Equals(Name["Id"]))
+    {
+        <div>
+            <partial name="_UserProfileOptions" />
+        </div>
+        <h1>My Mods</h1>
+    }
+    else
+    {
+        <h1> @Name["Id"]'s Mods</h1>
+        <a asp-area="" asp-controller="PrivateMessage" asp-action="Create" asp-route-Id="@Name["Id"]"> Send private message</a>
+    }
 }
 else
 {
     <h1> @Name["Id"]'s Mods</h1>
+    <a asp-area="" asp-controller="PrivateMessage" asp-action="Create" asp-route-Id="@Name["Id"]"> Send private message</a>
 }
+
 
 
 
@@ -49,10 +58,11 @@ else
                         @mod.CreatedOn.ToString("dd/MM/yyyy")
                     </time>
 
-                    <div class="author">&nbsp;&nbsp;&nbsp;<span class="label">Game: </span> 
-                    <a asp-area="" asp-controller="Game" asp-action="Details" asp-route-Id="@mod.GameId"> @mod.Game</a>
+                    <div class="author">
+                        &nbsp;&nbsp;&nbsp;<span class="label">Game: </span>
+                        <a asp-area="" asp-controller="Game" asp-action="Details" asp-route-Id="@mod.GameId"> @mod.Game</a>
                     </div>
-                    
+
                 </div>
                 <div class="card-body text-center h-25 pb-0 pt-0 pl-0 pr-0">
                     <div class="mt-0">
@@ -62,12 +72,14 @@ else
                                 <i class="fa fa-download">&nbsp;&nbsp;@mod.TotalDownloadCount</i>
                             </div>
                         </li>
-                        @if (User.Identity.Name.Equals(Name["Id"]))
+                        @if (User.Identity.IsAuthenticated)
                         {
-                            <a asp-controller="Mod" asp-action="Edit" asp-route-id="@mod.Id" class="btn btn-primary btn-md">Edit</a>
-                            <a asp-controller="Mod" asp-action="Delete" asp-route-id="@mod.Id" class="btn btn-primary btn-md">Delete</a>
+                            @if (User.Identity.Name.Equals(Name["Id"]))
+                            {
+                                <a asp-controller="Mod" asp-action="Edit" asp-route-id="@mod.Id" class="btn btn-primary btn-md">Edit</a>
+                                <a asp-controller="Mod" asp-action="Delete" asp-route-id="@mod.Id" class="btn btn-primary btn-md">Delete</a>
+                            }
                         }
-
                     </div>
                 </div>
             </div>
