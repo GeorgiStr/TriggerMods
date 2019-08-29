@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Server;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using TriggerMods.Common;
@@ -15,6 +17,7 @@ namespace TriggerMods.Web.Controllers
 {
     public class ModController : BaseController
     {
+        private const string fileDir = "/wwwroot/files/";
         private readonly IModService modService;
         private readonly IPictureService pictureService;
         private readonly IUserService userService;
@@ -36,10 +39,13 @@ namespace TriggerMods.Web.Controllers
             this.commentService = commentService;
         }
 
-        public FileResult Download(string Id)
+        public FileResult Download(string Id, string name, string modId, string gameId)
         {
-            byte[] fileBytes = System.IO.File.ReadAllBytes(@"c:\folder\myfile.ext");
-            string fileName = "myfile.ext";
+            this.modService.DownloadsCountUp(modId, gameId);
+            string fileExt = System.IO.Path.GetExtension(Id);
+            string fileName = name.Trim() + fileExt;
+            string path = Environment.CurrentDirectory + fileDir + Id;
+            byte[] fileBytes = System.IO.File.ReadAllBytes(path);
             return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);
         }
 

@@ -148,6 +148,7 @@
             var mod = this.GetById(id);
             var game = this.db.Games.FirstOrDefault(x => x.Id == mod.GameId);
             game.ModCount--;
+            mod.User.ModCount--;
             this.db.Mods.Remove(mod);
             this.db.SaveChanges();
         }
@@ -163,6 +164,13 @@
         {
             var files = this.db.Files.Where(x => x.ModId == id);
             this.db.Files.RemoveRange(files);
+            this.db.SaveChanges();
+        }
+
+        public void DownloadsCountUp(string modId, string gameId)
+        {
+            this.db.Mods.FirstOrDefault(x => x.Id == modId).TotalDownloadCount++;
+            this.db.Games.FirstOrDefault(x => x.Id == gameId).TotalDownloadCount++;
             this.db.SaveChanges();
         }
     }

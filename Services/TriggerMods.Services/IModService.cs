@@ -18,6 +18,8 @@
 
         void ViewUp(string id);
 
+        void DownloadsCountUp(string modId, string gameId);
+
         void Edit(string id, string name, string version, string description);
 
         void Delete(string id);

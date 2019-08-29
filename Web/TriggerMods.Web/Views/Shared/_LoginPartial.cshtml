@@ -11,7 +11,7 @@
             <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" id="navbarDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="Manage">Hello @(this.User.Identity.Name)!</a>
 
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a asp-area="" asp-controller="User" asp-action="UserMods" class="dropdown-item nav-link text-black-50"><i></i> My Profile</a>
+                <a asp-area="" asp-controller="User" asp-action="UserMods" asp-route-Id="@User.Identity.Name" class="dropdown-item nav-link text-black-50"><i></i> My Profile</a>
                 <a asp-area="Identity" asp-page="/Account/Manage/Index" class="dropdown-item nav-link text-black-50"><i></i> Settings</a>
                 <a asp-area="Identity" asp-page="/Account/Logout" class="dropdown-item nav-link text-black-50"><i></i> Logout</a>
             </div>

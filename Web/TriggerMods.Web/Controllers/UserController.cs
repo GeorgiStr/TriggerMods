@@ -1,14 +1,12 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using TriggerMods.Services;
-using TriggerMods.Web.ViewModels;
-
-namespace TriggerMods.Web.Controllers
+﻿namespace TriggerMods.Web.Controllers
 {
+    using System.Linq;
+
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Mvc;
+    using TriggerMods.Services;
+    using TriggerMods.Web.ViewModels;
+
     public class UserController : BaseController
     {
         private readonly ICommentService commentService;
@@ -20,11 +18,10 @@ namespace TriggerMods.Web.Controllers
             this.modService = modService;
         }
 
+        [Authorize]
         public IActionResult UserMods(string id)
         {
-            string name = this.User.Identity.Name;
-
-            var viewModel = this.modService.GetAllByUserName(name).Select(x => new ModListingViewModel
+            var viewModel = this.modService.GetAllByUserName(id).Select(x => new ModListingViewModel
             {
                 Id = x.Id,
                 Name = x.Name,
@@ -35,6 +32,8 @@ namespace TriggerMods.Web.Controllers
                 TotalDownloadCount = x.TotalDownloadCount,
                 VoteCount = x.VoteCount,
                 Visible = x.Visible,
+                Game = x.Game.Name,
+                GameId = x.GameId,
             }).ToList();
 
             return this.View(viewModel);

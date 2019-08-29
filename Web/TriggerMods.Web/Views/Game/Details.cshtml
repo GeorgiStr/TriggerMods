@@ -39,7 +39,9 @@
                         @mod.CreatedOn.ToString("dd/MM/yyyy")
                     </time>
                     
-                    <div class="author">&nbsp;&nbsp;&nbsp;<span class="label">Uploader: </span> <a href="/">@mod.UploaderName</a></div>
+                    <div class="author">&nbsp;&nbsp;&nbsp;<span class="label">Uploader: </span>
+                    <a asp-area="" asp-controller="User" asp-action="UserMods" asp-route-Id="@mod.UploaderName"> @mod.UploaderName</a>
+                    </div>
                 </div>
                 <div class="card-body text-center h-25 pb-0 pt-0 pl-0 pr-0">
                     <div class="mt-0" >

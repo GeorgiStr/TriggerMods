@@ -2,13 +2,22 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
+    var Name = Url.ActionContext.RouteData.Values;
 }
 
-<div>
-    <partial name="_UserProfileOptions" />
-</div>
+@if (User.Identity.Name.Equals(Name["Id"]))
+{
+    <div>
+        <partial name="_UserProfileOptions" />
+    </div>
+    <h1>My Mods</h1>
+}
+else
+{
+    <h1> @Name["Id"]'s Mods</h1>
+}
 
-<h1>My Mods</h1>
+
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <style>
@@ -40,7 +49,10 @@
                         @mod.CreatedOn.ToString("dd/MM/yyyy")
                     </time>
 
-                    <div class="author">&nbsp;&nbsp;&nbsp;<span class="label">Uploader: </span> <a href="/">@mod.UploaderName</a></div>
+                    <div class="author">&nbsp;&nbsp;&nbsp;<span class="label">Game: </span> 
+                    <a asp-area="" asp-controller="Game" asp-action="Details" asp-route-Id="@mod.GameId"> @mod.Game</a>
+                    </div>
+                    
                 </div>
                 <div class="card-body text-center h-25 pb-0 pt-0 pl-0 pr-0">
                     <div class="mt-0">
@@ -50,8 +62,12 @@
                                 <i class="fa fa-download">&nbsp;&nbsp;@mod.TotalDownloadCount</i>
                             </div>
                         </li>
-                        <a asp-controller="Mod" asp-action="Edit" asp-route-id="@mod.Id" class="btn btn-primary btn-md">Edit</a>
-                        <a asp-controller="Mod" asp-action="Delete" asp-route-id="@mod.Id" class="btn btn-primary btn-md">Delete</a>
+                        @if (User.Identity.Name.Equals(Name["Id"]))
+                        {
+                            <a asp-controller="Mod" asp-action="Edit" asp-route-id="@mod.Id" class="btn btn-primary btn-md">Edit</a>
+                            <a asp-controller="Mod" asp-action="Delete" asp-route-id="@mod.Id" class="btn btn-primary btn-md">Delete</a>
+                        }
+
                     </div>
                 </div>
             </div>
