@@ -45,7 +45,7 @@
             this.db.SaveChanges();
         }
 
-        public void AddFileUrl(string id, string fileUrl, string fileName, string fileFileDescription, IFormFile MainFile)
+        public void AddFileUrl(string id, string fileUrl, string fileName, string fileFileDescription, long fileLength)
         {
             var mod = this.db.Mods.FirstOrDefault(x => x.Id == id);
             var file = new File
@@ -54,7 +54,7 @@
                 FilePath = fileUrl,
                 Name = fileName,
                 Description = fileFileDescription,
-                FileSize = MainFile.Length / 1024,
+                FileSize = fileLength / 1024,
                 Status = FileStatus.Main,
                 Mod = mod,
             };
@@ -177,13 +177,6 @@
             mod.Name = name;
             mod.Version = version;
             mod.Description = description;
-            this.db.SaveChanges();
-        }
-
-        public void RemoveImagesOnEdit(string id)
-        {
-            var images = this.db.Pictures.Where(x => x.ModId == id);
-            this.db.Pictures.RemoveRange(images);
             this.db.SaveChanges();
         }
 

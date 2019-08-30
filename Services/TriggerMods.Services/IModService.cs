@@ -12,7 +12,7 @@
 
         void AddImageUrl(string id, string imageUrl);
 
-        void AddFileUrl(string id, string imageUrl, string fileName, string fileFileDescription, IFormFile MainFile);
+        void AddFileUrl(string id, string imageUrl, string fileName, string fileFileDescription, long fileLength);
 
         void AddGalleryUrls(string id, List<string> imageUrls);
 
@@ -23,8 +23,6 @@
         void Edit(string id, string name, string version, string description);
 
         void Delete(string id);
-
-        void RemoveImagesOnEdit(string id);
 
         void DeleteImages(string id);
 

@@ -186,12 +186,12 @@
             {
                 var fileUrl = await this.pictureService.UploadFile(model.MainFile, GlobalConstants.File_PATH_TEMPLATE, model.Name, model.Id);
 
-                this.modService.AddFileUrl(model.Id, fileUrl, model.FileName, model.FileDescription, model.MainFile);
+                this.modService.AddFileUrl(model.Id, fileUrl, model.FileName, model.FileDescription, model.MainFile.Length);
             }
 
             if (model.Gallery != null)
             {
-                this.modService.RemoveImagesOnEdit(model.Id);
+                this.modService.DeleteImages(model.Id);
 
                 var fileUrls = await this.pictureService.UploadImages(model.Gallery.ToList(), GlobalConstants.MOD_G_PATH_TEMPLATE, model.Name, model.Id);
 
@@ -241,7 +241,7 @@
             {
                 var fileUrl = await this.pictureService.UploadFile(model.MainFile, GlobalConstants.File_PATH_TEMPLATE, mod.Name, mod.Id);
 
-                this.modService.AddFileUrl(mod.Id, fileUrl, model.FileName, model.FileDescription, model.MainFile);
+                this.modService.AddFileUrl(mod.Id, fileUrl, model.FileName, model.FileDescription, model.MainFile.Length);
             }
 
             if (model.Gallery != null)
