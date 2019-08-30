@@ -80,7 +80,14 @@
 
         <div style="float: left; width: 30%;">
             <label>
-                <input id="up" type="checkbox" onclick="@("voteModFunc('" + Model.Id + "')")" class="radio" name="a" />
+                @if (Model.Voted == true)
+                {
+                    <input id="up" type="checkbox" onclick="@("voteModFunc('" + Model.Id + "')")" class="radio" name="a" checked disabled />
+                }
+                else
+                {
+                    <input id="up" type="checkbox" onclick="@("voteModFunc('" + Model.Id + "')")" class="radio" name="a" />
+                }
                 <i id="a" class="fa fa-thumbs-up" style="font-size: 40px;"></i>
             </label>
         </div>

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace TriggerMods.Data.Models
+﻿namespace TriggerMods.Data.Models
 {
     public enum FileStatus
     {

@@ -1,12 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using TriggerMods.Data.Models;
-
-namespace TriggerMods.Services
+﻿namespace TriggerMods.Services
 {
+    using System.Linq;
+
+    using TriggerMods.Data.Models;
+
     public interface IGameService
     {
         void CreateGame(Game game);

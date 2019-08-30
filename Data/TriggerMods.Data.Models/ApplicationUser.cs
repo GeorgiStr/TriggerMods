@@ -3,11 +3,10 @@ namespace TriggerMods.Data.Models
 {
     using System;
     using System.Collections.Generic;
-
-    using TriggerMods.Data.Common.Models;
+    using System.ComponentModel.DataAnnotations.Schema;
 
     using Microsoft.AspNetCore.Identity;
-    using System.ComponentModel.DataAnnotations.Schema;
+    using TriggerMods.Data.Common.Models;
 
     public class ApplicationUser : IdentityUser, IAuditInfo, IDeletableEntity
     {

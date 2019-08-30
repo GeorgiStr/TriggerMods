@@ -1,10 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using TriggerMods.Data.Common.Models;
-
-namespace TriggerMods.Data.Models
+﻿namespace TriggerMods.Data.Models
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Text;
+
+    using TriggerMods.Data.Common.Models;
+
     public class Game : BaseModel<string>
     {
         public Game()

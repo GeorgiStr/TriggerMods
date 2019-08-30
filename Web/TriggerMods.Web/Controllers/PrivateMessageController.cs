@@ -1,15 +1,13 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using TriggerMods.Data.Models;
-using TriggerMods.Services;
-using TriggerMods.Web.InputModels;
-
-namespace TriggerMods.Web.Controllers
+﻿namespace TriggerMods.Web.Controllers
 {
+    using System;
+
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Mvc;
+    using TriggerMods.Data.Models;
+    using TriggerMods.Services;
+    using TriggerMods.Web.InputModels;
+
     public class PrivateMessageController : BaseController
     {
         private readonly IPrivateMessageService privateMessageService;
@@ -26,14 +24,12 @@ namespace TriggerMods.Web.Controllers
         [Authorize]
         public IActionResult Inbox()
         {
-
             return this.View();
         }
 
         [Authorize]
         public IActionResult Create()
         {
-
             return this.View();
         }
 
@@ -77,7 +73,6 @@ namespace TriggerMods.Web.Controllers
                 Receiver = message.Sender.UserName,
                 Sender = this.User.Identity.Name,
             };
-            int a = 0;
             return this.View("Create", model);
         }
 
@@ -100,7 +95,8 @@ namespace TriggerMods.Web.Controllers
 
             this.privateMessageService.Create(message);
             return this.RedirectToAction("Inbox", "User");
-            //return this.RedirectToAction("UserMods", "User", new {id = receiver.UserName });
+
+            // return this.RedirectToAction("UserMods", "User", new {id = receiver.UserName });
         }
     }
 }

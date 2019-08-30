@@ -45,14 +45,17 @@
             string fileName = name.Trim() + fileExt;
             string path = Environment.CurrentDirectory + fileDir + Id;
             byte[] fileBytes = System.IO.File.ReadAllBytes(path);
-            return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);
+            return this.File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);
         }
 
         public IActionResult Details(string Id)
         {
             var mod = this.modService.GetById(Id);
+            var user = this.userService.GetUserByName(this.User.Identity.Name);
 
-            if(mod == null)
+            var voted = this.voteService.CheckIfVoted(mod.Id,user.Id);
+
+            if (mod == null)
             {
                 return this.View("MissingMod");
             }
@@ -69,6 +72,7 @@
                 VoteCount = mod.VoteCount,
                 TotalDownloadCount = mod.TotalDownloadCount,
                 Visible = mod.Visible,
+                Voted = voted,
                 UserName = mod.User.UserName,
                 UserId = mod.UserId,
                 GameId = mod.GameId,
@@ -117,7 +121,8 @@
 
             this.commentService.CreateComment(comment);
             return new JsonResult(model);
-            //return this.RedirectToAction(nameof(this.PostDetails), new { Id = model.Id });
+
+            // return this.RedirectToAction(nameof(this.PostDetails), new { Id = model.Id });
         }
 
         [Authorize]
@@ -208,7 +213,7 @@
         {
             var user = this.userService.GetUserByName(this.User.Identity.Name);
             var game = this.gameService.GetGameById(model.GameId);
-            if (!ModelState.IsValid)
+            if (!this.ModelState.IsValid)
             {
                 return this.View();
             }
@@ -266,7 +271,8 @@
             this.voteService.Create(vote);
 
             return new JsonResult(mod.VoteCount);
-            //return this.RedirectToAction(nameof(this.PostDetails), new { Id = model.Id });
+
+            // return this.RedirectToAction(nameof(this.PostDetails), new { Id = model.Id });
         }
     }
 }

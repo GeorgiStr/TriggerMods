@@ -1,13 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using TriggerMods.Data;
-using TriggerMods.Data.Models;
-
-namespace TriggerMods.Services
+﻿namespace TriggerMods.Services
 {
+    using System.Linq;
+
+    using Microsoft.EntityFrameworkCore;
+    using TriggerMods.Data;
+    using TriggerMods.Data.Models;
+
     public class PrivateMessageService : IPrivateMessageService
     {
         private readonly ApplicationDbContext db;

@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace TriggerMods.Web.ViewModels
+﻿namespace TriggerMods.Web.ViewModels
 {
+    using System;
+    using System.Collections.Generic;
+
     public class ModViewModel
     {
         public string Id { get; set; }
@@ -34,6 +32,8 @@ namespace TriggerMods.Web.ViewModels
         public string GameId { get; set; }
 
         public string Game { get; set; }
+
+        public bool Voted { get; set; }
 
         public ICollection<string> Pictures { get; set; }
 

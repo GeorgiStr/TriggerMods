@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using TriggerMods.Data.Common.Models;
-
-namespace TriggerMods.Data.Models
+﻿namespace TriggerMods.Data.Models
 {
+    using TriggerMods.Data.Common.Models;
+
     public class File : BaseModel<string>
     {
         public string Name { get; set; }

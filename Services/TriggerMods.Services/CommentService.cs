@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using TriggerMods.Data;
-using TriggerMods.Data.Models;
-
-namespace TriggerMods.Services
+﻿namespace TriggerMods.Services
 {
+    using System.Linq;
+
+    using TriggerMods.Data;
+    using TriggerMods.Data.Models;
+
     public class CommentService : ICommentService
     {
         private readonly ApplicationDbContext db;

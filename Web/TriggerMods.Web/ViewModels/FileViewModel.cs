@@ -1,6 +1,7 @@
 ﻿namespace TriggerMods.Web.ViewModels
 {
     using System;
+
     using TriggerMods.Data.Models;
 
     public class FileViewModel

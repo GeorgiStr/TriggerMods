@@ -1,7 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
-
-namespace TriggerMods.Data.Migrations
+﻿namespace TriggerMods.Data.Migrations
 {
+    using Microsoft.EntityFrameworkCore.Migrations;
+
     public partial class MorePropertiesInPrivateMessage : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)

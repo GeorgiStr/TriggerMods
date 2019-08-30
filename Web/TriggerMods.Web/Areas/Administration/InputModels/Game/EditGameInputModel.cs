@@ -1,13 +1,10 @@
-﻿using Microsoft.AspNetCore.Http;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
-using TriggerMods.Web.InputModels;
-
-namespace TriggerMods.Web.Areas.Administration.InputModels.Game
+﻿namespace TriggerMods.Web.Areas.Administration.InputModels.Game
 {
+    using System.ComponentModel.DataAnnotations;
+
+    using Microsoft.AspNetCore.Http;
+    using TriggerMods.Web.InputModels;
+
     public class EditGameInputModel
     {
         public const int GameNameMaxLength = 30;

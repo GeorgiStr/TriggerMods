@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using TriggerMods.Data.Models;
-
-namespace TriggerMods.Web.Areas.Administration.ViewModels.Game
+﻿namespace TriggerMods.Web.Areas.Administration.ViewModels.Game
 {
+    using System;
+
     public class GameDetailsViewModel
     {
         public string Name { get; set; }

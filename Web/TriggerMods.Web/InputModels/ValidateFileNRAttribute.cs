@@ -26,7 +26,7 @@
                 }
                 else if (file.Length > (Filesize * 1024 * 1024))
                 {
-                    return new ValidationResult(fileSizeMessage);
+                    return new ValidationResult(this.fileSizeMessage);
                 }
             }
 
