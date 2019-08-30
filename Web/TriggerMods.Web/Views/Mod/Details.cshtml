@@ -29,7 +29,23 @@
         object-fit: contain;
         margin: 20px 10px;
         display: inline;
+    }
     
+    [type=checkbox] {
+        position: absolute;
+        opacity: 0;
+        width: 0;
+        height: 0;
+    }
+        /* IMAGE STYLES */
+        [type=checkbox] + [id=a] {
+            cursor: pointer;
+            color: grey
+        }
+        /* CHECKED STYLES */
+        [type=checkbox]:checked + [id=a] {
+            color: blue;
+        }
 </style>
 <a asp-controller="Game" asp-action="Details" asp-route-id="@Model.GameId">@Model.Game</a>
 <div align="center"><h1>@Model.Name</h1></div>
@@ -46,7 +62,7 @@
     </div>
     <div class="block">
         <div>Votes</div>
-        <div>@Model.VoteCount</div>
+        <div id="vCount">@Model.VoteCount</div>
     </div>
     <div class="block">
         <div>Views</div>
@@ -61,7 +77,13 @@
         <div>@Model.Version</div>
     </div>
     <div class="block">
-        <div style="float: left; width: 30%;"><i class="fa fa-thumbs-up" style="font-size: 40px">&nbsp;&nbsp;</i></div>
+
+        <div style="float: left; width: 30%;">
+            <label>
+                <input id="up" type="checkbox" onclick="@("voteModFunc('" + Model.Id + "')")" class="radio" name="a" />
+                <i id="a" class="fa fa-thumbs-up" style="font-size: 40px;"></i>
+            </label>
+        </div>
         <div style="float: right; width: 70%;"><a asp-controller="Mod" asp-action="Download" asp-route-id="@Model.Files[0].FilePath.Split("/")[2]"  asp-route-name="@Model.Name" asp-route-modId="@Model.Id" asp-route-gameId="@Model.GameId" class="btn btn-primary btn-md">Download</a></div>
     </div>
 
@@ -115,6 +137,42 @@
 
 
 <script>
+
+    function voteModFunc(elem) {
+        var ModId = elem
+        var vCount = document.getElementById("vCount");
+       
+        var data = { ModId: ModId };
+        
+        $.ajax({
+            type: 'POST',
+            url: '/Mod/VoteMod',
+            dataType: 'json',
+            contentType: 'application/json',
+            data: JSON.stringify(data),
+            success: function (result) {
+                console.log(data);
+                console.log(result);
+                vCount.innerHTML = result;
+            },
+            error: function (result) {
+                console.log(result);
+            }
+        });
+        document.getElementById("up").disabled = true;
+    }
+
+    $("input:checkbox").on('click', function () {
+        var $box = $(this);
+        if ($box.is(":checked")) {
+            var group = "input:checkbox[name='" + $box.attr("name") + "']";
+            $(group).prop("checked", false);
+            $box.prop("checked", true);
+        } else {
+            $box.prop("checked", false);
+        }
+    });
+
     function myFunction(elem) {
         var Comment = document.getElementById("myTextarea").value;
         var PostId = elem

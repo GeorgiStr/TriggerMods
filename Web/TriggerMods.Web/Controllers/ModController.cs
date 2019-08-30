@@ -1,20 +1,17 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Server;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using TriggerMods.Common;
-using TriggerMods.Data.Models;
-using TriggerMods.Services;
-using TriggerMods.Web.InputModels;
-using TriggerMods.Web.ViewModels;
-
-namespace TriggerMods.Web.Controllers
+﻿namespace TriggerMods.Web.Controllers
 {
+    using System;
+    using System.Linq;
+    using System.Threading.Tasks;
+
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Mvc;
+    using TriggerMods.Common;
+    using TriggerMods.Data.Models;
+    using TriggerMods.Services;
+    using TriggerMods.Web.InputModels;
+    using TriggerMods.Web.ViewModels;
+
     public class ModController : BaseController
     {
         private const string fileDir = "/wwwroot/files/";
@@ -23,20 +20,22 @@ namespace TriggerMods.Web.Controllers
         private readonly IUserService userService;
         private readonly IGameService gameService;
         private readonly ICommentService commentService;
+        private readonly IVoteService voteService;
 
         public ModController(
-            IModService modService, 
-            IPictureService pictureService, 
-            IUserService userService, 
+            IModService modService,
+            IPictureService pictureService,
+            IUserService userService,
             IGameService gameService,
-            ICommentService commentService
-            )
+            ICommentService commentService,
+            IVoteService voteService)
         {
             this.modService = modService;
             this.pictureService = pictureService;
             this.userService = userService;
             this.gameService = gameService;
             this.commentService = commentService;
+            this.voteService = voteService;
         }
 
         public FileResult Download(string Id, string name, string modId, string gameId)
@@ -67,6 +66,7 @@ namespace TriggerMods.Web.Controllers
                 Description = mod.Description,
                 MainPicturePath = mod.MainPicturePath,
                 Views = mod.Views,
+                VoteCount = mod.VoteCount,
                 TotalDownloadCount = mod.TotalDownloadCount,
                 Visible = mod.Visible,
                 UserName = mod.User.UserName,
@@ -247,6 +247,26 @@ namespace TriggerMods.Web.Controllers
             }
 
             return this.Redirect("/");
+        }
+
+        [Authorize]
+        [HttpPost]
+        public IActionResult VoteMod([FromBody] VoteInputModel model)
+        {
+            var currentUser = this.userService.GetUserByName(this.User.Identity.Name);
+
+            var mod = this.modService.GetById(model.ModId);
+
+            var vote = new Vote
+            {
+                UserId = currentUser.Id,
+                ModId = model.ModId,
+            };
+
+            this.voteService.Create(vote);
+
+            return new JsonResult(mod.VoteCount);
+            //return this.RedirectToAction(nameof(this.PostDetails), new { Id = model.Id });
         }
     }
 }

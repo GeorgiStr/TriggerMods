@@ -111,6 +111,12 @@
                 .Include(x => x.User)
                 .Where(x => x.GameId == Id).OrderByDescending(x => x.TotalDownloadCount);
             }
+            else if (sortType.Equals(SortTypes.Votes.ToString()))
+            {
+                return this.db.Mods
+                .Include(x => x.User)
+                .Where(x => x.GameId == Id).OrderByDescending(x => x.VoteCount);
+            }
 
             return null;
         }
@@ -150,6 +156,11 @@
             {
                 return this.db.Mods
                 .Where(x => x.User.UserName == name).OrderByDescending(x => x.TotalDownloadCount);
+            }
+            else if (sortType.Equals(SortTypes.Votes.ToString()))
+            {
+                return this.db.Mods
+                .Where(x => x.User.UserName == name).OrderByDescending(x => x.VoteCount);
             }
 
             return null;
