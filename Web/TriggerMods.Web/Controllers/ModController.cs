@@ -84,7 +84,7 @@ namespace TriggerMods.Web.Controllers
                 UserId = x.UserId,
                 UserName = x.User.UserName,
                 ModId = x.ModId,
-            }).ToList();
+            }).OrderByDescending(x => x.CreatedOn).ToList();
 
             model.Files = mod.Files.Select(x => new FileViewModel
             {

@@ -64,9 +64,18 @@
             db.SaveChanges();
         }
 
-        public IQueryable<Game> GetAll()
+        public IQueryable<Game> GetAll(string sortType)
         {
-            return this.db.Games;
+            if(sortType == null || sortType.Equals(SortTypes.Downloads.ToString()))
+            {
+                return this.db.Games.OrderByDescending(x => x.TotalDownloadCount);
+            }
+            else if (sortType.Equals(SortTypes.ModCount.ToString()))
+            {
+                return this.db.Games.OrderByDescending(x => x.ModCount);
+            }
+
+            return null;
         }
 
         public Game GetGameById(string Id)

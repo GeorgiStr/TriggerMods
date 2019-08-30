@@ -1,13 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using TriggerMods.Services;
-using TriggerMods.Web.ViewModels;
-
-namespace TriggerMods.Web.Controllers
+﻿namespace TriggerMods.Web.Controllers
 {
+    using System.Linq;
+
+    using Microsoft.AspNetCore.Mvc;
+    using TriggerMods.Services;
+    using TriggerMods.Web.ViewModels;
+
     public class GameController : BaseController
     {
         private readonly IGameService gameService;
@@ -19,10 +17,10 @@ namespace TriggerMods.Web.Controllers
             this.modService = modService;
         }
 
-        public IActionResult Details(string id)
+        public IActionResult Details(string id, string sortType)
         {
             var viewModel = new ListOfModsViewModel();
-            viewModel.Mods = this.modService.GetAllByGameId(id).Select(x => new ModListingViewModel
+            viewModel.Mods = this.modService.GetAllByGameId(id, sortType).Select(x => new ModListingViewModel
             {
                 Id = x.Id,
                 Name = x.Name,

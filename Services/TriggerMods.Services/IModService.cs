@@ -32,10 +32,10 @@
 
         Mod GetById(string id);
 
-        IQueryable<Mod> GetAllByGameId(string Id);
+        IQueryable<Mod> GetAllByGameId(string Id, string sortType);
 
         IList<string> GetGalleryUrlsById(string Id);
 
-        IQueryable<Mod> GetAllByUserName(string name);
+        IQueryable<Mod> GetAllByUserName(string name, string sortType);
     }
 }

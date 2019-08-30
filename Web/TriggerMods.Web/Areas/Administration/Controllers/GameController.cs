@@ -1,17 +1,15 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using TriggerMods.Common;
-using TriggerMods.Data.Models;
-using TriggerMods.Services;
-using TriggerMods.Web.Areas.Administration.InputModels.Game;
-using TriggerMods.Web.Areas.Administration.ViewModels.Game;
-
-namespace TriggerMods.Web.Areas.Administration.Controllers
+﻿namespace TriggerMods.Web.Areas.Administration.Controllers
 {
+    using System;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Mvc;
+    using TriggerMods.Common;
+    using TriggerMods.Data.Models;
+    using TriggerMods.Services;
+    using TriggerMods.Web.Areas.Administration.InputModels.Game;
+    using TriggerMods.Web.Areas.Administration.ViewModels.Game;
+
     public class GameController : AdministrationController
     {
         private readonly IGameService gameService;
@@ -23,9 +21,9 @@ namespace TriggerMods.Web.Areas.Administration.Controllers
             this.pictureService = pictureService;
         }
 
-        public IActionResult GameList()
+        public IActionResult GameList(string sortType)
         {
-            var viewModel = this.gameService.GetAll().Select(x => new GameListingModel
+            var viewModel = this.gameService.GetAll(sortType).Select(x => new GameListingModel
             {
                 Id = x.Id,
                 Name = x.Name,

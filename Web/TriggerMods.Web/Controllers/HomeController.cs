@@ -15,9 +15,9 @@
             this.gameService = gameService;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(string sortType)
         {
-            var viewModel = this.gameService.GetAll().Select(x => new GameViewModel
+            var viewModel = this.gameService.GetAll(sortType).Select(x => new GameViewModel
             {
                 Id = x.Id,
                 Name = x.Name,

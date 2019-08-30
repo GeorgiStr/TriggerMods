@@ -23,9 +23,9 @@
             this.privateMessageService = privateMessageService;
         }
 
-        public IActionResult UserMods(string id)
+        public IActionResult UserMods(string id, string sortType)
         {
-            var viewModel = this.modService.GetAllByUserName(id).Select(x => new ModListingViewModel
+            var viewModel = this.modService.GetAllByUserName(id, sortType).Select(x => new ModListingViewModel
             {
                 Id = x.Id,
                 Name = x.Name,

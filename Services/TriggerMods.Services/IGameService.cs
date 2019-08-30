@@ -23,7 +23,7 @@ namespace TriggerMods.Services
 
         void DeleteGame(string id);
 
-        IQueryable<Game> GetAll();
+        IQueryable<Game> GetAll(string sortType);
 
         Game GetGameById(string Id);
     }

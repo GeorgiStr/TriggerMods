@@ -91,21 +91,39 @@
             this.db.SaveChanges();
         }
 
-        public IQueryable<Mod> GetAllByGameId(string Id)
+        public IQueryable<Mod> GetAllByGameId(string Id, string sortType)
         {
-            return this.db.Mods
+            if (sortType == null || sortType.Equals(SortTypes.Date.ToString()))
+            {
+                return this.db.Mods
                 .Include(x => x.User)
-                .Where(x => x.GameId == Id);
+                .Where(x => x.GameId == Id).OrderByDescending(x => x.CreatedOn);
+            }
+            else if (sortType.Equals(SortTypes.Views.ToString()))
+            {
+                return this.db.Mods
+                .Include(x => x.User)
+                .Where(x => x.GameId == Id).OrderByDescending(x => x.Views);
+            }
+            else if (sortType.Equals(SortTypes.Downloads.ToString()))
+            {
+                return this.db.Mods
+                .Include(x => x.User)
+                .Where(x => x.GameId == Id).OrderByDescending(x => x.TotalDownloadCount);
+            }
+
+            return null;
         }
 
         public Mod GetById(string id)
         {
             return this.db.Mods
-                .Include(x => x.Comments)
                 .Include(x => x.Files)
                 .Include(x => x.Pictures)
                 .Include(x => x.User)
                 .Include(x => x.Game)
+                .Include(x => x.Comments)
+                .ThenInclude(x => x.User)
                 .FirstOrDefault(x => x.Id == id);
         }
 
@@ -116,10 +134,25 @@
             this.db.SaveChanges();
         }
 
-        public IQueryable<Mod> GetAllByUserName(string name)
+        public IQueryable<Mod> GetAllByUserName(string name, string sortType)
         {
-            return this.db.Mods
-                .Where(x => x.User.UserName == name);
+            if (sortType == null || sortType.Equals(SortTypes.Date.ToString()))
+            {
+                return this.db.Mods
+                .Where(x => x.User.UserName == name).OrderByDescending(x => x.CreatedOn);
+            }
+            else if (sortType.Equals(SortTypes.Views.ToString()))
+            {
+                return this.db.Mods
+                .Where(x => x.User.UserName == name).OrderByDescending(x => x.Views);
+            }
+            else if (sortType.Equals(SortTypes.Downloads.ToString()))
+            {
+                return this.db.Mods
+                .Where(x => x.User.UserName == name).OrderByDescending(x => x.TotalDownloadCount);
+            }
+
+            return null;
         }
 
         public IList<string> GetGalleryUrlsById(string Id)

@@ -3,7 +3,7 @@
 *@
 @{
 }
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <style>
     .row {
         width: 100%;
@@ -61,8 +61,8 @@
         <div>@Model.Version</div>
     </div>
     <div class="block">
-        
-        <div><a asp-controller="Mod" asp-action="Download" asp-route-id="@Model.Files[0].FilePath.Split("/")[2]"  asp-route-name="@Model.Name" asp-route-modId="@Model.Id" asp-route-gameId="@Model.GameId" class="btn btn-primary btn-md">Download</a></div>
+        <div style="float: left; width: 30%;"><i class="fa fa-thumbs-up" style="font-size: 40px">&nbsp;&nbsp;</i></div>
+        <div style="float: right; width: 70%;"><a asp-controller="Mod" asp-action="Download" asp-route-id="@Model.Files[0].FilePath.Split("/")[2]"  asp-route-name="@Model.Name" asp-route-modId="@Model.Id" asp-route-gameId="@Model.GameId" class="btn btn-primary btn-md">Download</a></div>
     </div>
 
 </div>
@@ -140,14 +140,10 @@
             contentType: 'application/json',
             data: JSON.stringify(data),
             success: function (result) {
-                console.log(data);
-                console.log('Data received: ');
-                console.log(result);
+                location.reload();
             },
             error: function (result) {
-                console.log(data);
-                console.log('ERROR');
-                console.log(result);
+                
             }
         });
         document.getElementById("myTextarea").value = "";
