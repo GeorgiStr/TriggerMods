@@ -10,11 +10,10 @@
         private readonly IModService modService;
         private readonly IUserService userService;
 
-        public VoteService(ApplicationDbContext db, IModService modService, IUserService userService)
+        public VoteService(ApplicationDbContext db, IModService modService)
         {
             this.db = db;
             this.modService = modService;
-            this.userService = userService;
         }
 
         public bool CheckIfVoted(string modId, string userId)

@@ -10,7 +10,7 @@
         public void GetUserByNameShouldReturnCorrectUser()
         {
             var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-                  .UseInMemoryDatabase(databaseName: "GetUserCompanyByUsername_Users_Database")
+                  .UseInMemoryDatabase(databaseName: "GetUserByNameShouldReturnCorrectUser_DB")
                   .Options;
 
             var dbContext = new ApplicationDbContext(options);
