@@ -3,6 +3,7 @@
 *@
 @{
     var Name = Url.ActionContext.RouteData.Values;
+    this.ViewData["Title"] = Name["Id"];
 }
 @if (User.Identity.IsAuthenticated)
 {

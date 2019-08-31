@@ -52,12 +52,16 @@
         {
             var mod = this.modService.GetById(Id);
             var user = this.userService.GetUserByName(this.User.Identity.Name);
-
-            var voted = this.voteService.CheckIfVoted(mod.Id,user.Id);
+            bool voted = false;
 
             if (mod == null)
             {
                 return this.View("MissingMod");
+            }
+
+            if (user != null)
+            {
+                voted = this.voteService.CheckIfVoted(mod.Id, user.Id);
             }
 
             var model = new ModViewModel
@@ -142,10 +146,12 @@
         [HttpPost]
         public IActionResult Delete(EditModInputModel model)
         {
+            var userName = this.User.Identity.Name;
+
             this.modService.DeleteImages(model.Id);
             this.modService.DeleteFiles(model.Id);
             this.modService.Delete(model.Id);
-            return this.Redirect("/");
+            return this.RedirectToAction("UserMods", "User", new { Id = userName });
         }
 
         [Authorize]
@@ -198,7 +204,7 @@
                 this.modService.AddGalleryUrls(model.Id, fileUrls.ToList());
             }
 
-            return this.Redirect("/");
+            return this.RedirectToAction("Details", new { Id = model.Id });
         }
 
         [Authorize]
@@ -251,7 +257,7 @@
                 this.modService.AddGalleryUrls(mod.Id, fileUrls.ToList());
             }
 
-            return this.Redirect("/");
+            return this.RedirectToAction("Details", new { Id = mod.Id });
         }
 
         [Authorize]
@@ -262,13 +268,22 @@
 
             var mod = this.modService.GetById(model.ModId);
 
-            var vote = new Vote
+            if (model.Value == true)
             {
-                UserId = currentUser.Id,
-                ModId = model.ModId,
-            };
+                var vote = new Vote
+                {
+                    UserId = currentUser.Id,
+                    ModId = model.ModId,
+                };
 
-            this.voteService.Create(vote);
+                this.voteService.Create(vote);
+            }
+            else
+            {
+                var vote = this.voteService.GetVoteOfUser(model.ModId, currentUser.Id);
+
+                this.voteService.Delete(vote);
+            }
 
             return new JsonResult(mod.VoteCount);
 

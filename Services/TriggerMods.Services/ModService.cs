@@ -184,8 +184,14 @@
         {
             var mod = this.GetById(id);
             var game = this.db.Games.FirstOrDefault(x => x.Id == mod.GameId);
+
+            this.DeleteFiles(id);
+            this.DeleteImages(id);
+            this.DeleteVotes(id);
+
             game.ModCount--;
             mod.User.ModCount--;
+
             this.db.Mods.Remove(mod);
             this.db.SaveChanges();
         }
@@ -201,6 +207,13 @@
         {
             var files = this.db.Files.Where(x => x.ModId == id);
             this.db.Files.RemoveRange(files);
+            this.db.SaveChanges();
+        }
+
+        public void DeleteVotes(string id)
+        {
+            var votes = this.db.Votes.Where(x => x.ModId == id);
+            this.db.Votes.RemoveRange(votes);
             this.db.SaveChanges();
         }
 

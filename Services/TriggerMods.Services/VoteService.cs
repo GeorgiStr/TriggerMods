@@ -8,7 +8,6 @@
     {
         private readonly ApplicationDbContext db;
         private readonly IModService modService;
-        private readonly IUserService userService;
 
         public VoteService(ApplicationDbContext db, IModService modService)
         {
@@ -30,7 +29,7 @@
         public void Create(Vote vote)
         {
             var mod = this.modService.GetById(vote.ModId);
-            if (vote == null)
+            if (vote == null || vote.UserId == null)
             {
                 return;
             }
@@ -39,6 +38,27 @@
 
             this.db.Votes.Add(vote);
             this.db.SaveChanges();
+        }
+
+        public void Delete(Vote vote)
+        {
+            var mod = this.modService.GetById(vote.ModId);
+            if (vote == null || vote.UserId == null)
+            {
+                return;
+            }
+
+            mod.VoteCount--;
+
+            this.db.Votes.Remove(vote);
+            this.db.SaveChanges();
+        }
+
+        public Vote GetVoteOfUser(string modId, string userId)
+        {
+            var vote = this.db.Votes.FirstOrDefault(x => x.ModId == modId && x.UserId == userId);
+
+            return vote;
         }
     }
 }

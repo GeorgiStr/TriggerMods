@@ -13,7 +13,6 @@
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <a asp-area="" asp-controller="User" asp-action="UserMods" asp-route-Id="@User.Identity.Name" class="dropdown-item nav-link text-black-50"><i></i> My Profile</a>
                 <a asp-area="Identity" asp-page="/Account/Manage/Index" class="dropdown-item nav-link text-black-50"><i></i> Settings</a>
-                <a asp-area="Identity" asp-page="/Account/Logout" class="dropdown-item nav-link text-black-50"><i></i> Logout</a>
             </div>
         </li>
         if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
